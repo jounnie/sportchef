@@ -1,0 +1,11 @@
+logging:
+  level: ALL
+  appenders:
+    - type: console
+      threshold: INFO
+      target: stdout
+    - type: file
+      currentLogFilename: ./logs/sportchef-server.log
+      archivedLogFilenamePattern: ./logs/sportchef-server-%d.log.gz
+      archivedFileCount: 5
+      timeZone: UTC
