@@ -1,0 +1,59 @@
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'gradle-one-jar'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+// Year and month
+version = '15.01'
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+idea {
+    module {
+        sourceDirs += file('src/main/java')
+        testSourceDirs += file('src/test/java')
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+// Set our project variables
+project.ext {
+    dropwizardVersion = '0.7.1'
+    jacksonDatatypeJSR310Version = '2.4.0'
+    jUnitVersion = '4.11'
+    mysqlConnectorVersion = '5.1.34'
+}
+
+dependencies {
+    compile (
+            'io.dropwizard:dropwizard-core:' + dropwizardVersion,
+            'io.dropwizard:dropwizard-jdbi:' + dropwizardVersion,
+            'io.dropwizard:dropwizard-client:' + dropwizardVersion,
+            'io.dropwizard:dropwizard-auth:' + dropwizardVersion,
+            'io.dropwizard:dropwizard-assets:' + dropwizardVersion,
+            'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:' + jacksonDatatypeJSR310Version,
+            'mysql:mysql-connector-java:' + mysqlConnectorVersion
+    )
+    testCompile group: 'junit', name: 'junit', version: jUnitVersion
+}
+
+// Add Gradle OneJarPlugin, see https:github.com/rholder/gradle-one-jar
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.github.rholder:gradle-one-jar:1.0.4'
+    }
+}
+task oneJar(type: OneJar) {
+    mainClass = 'ch.sportchef.server.App'
+    archiveName = 'sportchef-server.jar'
+}
