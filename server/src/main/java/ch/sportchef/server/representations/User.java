@@ -13,22 +13,27 @@ public class User {
 
     @NotBlank
     @Length(min=1, max=100)
-    private final String firstname;
+    private final String firstName;
 
     @NotBlank
     @Length(min=1, max=100)
-    private final String lastname;
+    private final String lastName;
+
+    @NotBlank
+    @Length(min=1, max=30)
+    private final String phone;
 
     @NotBlank
     @Email
     @Length(min=1, max=100)
     private final String email;
 
-    public User(final long id, @Nonnull final String firstname, @Nonnull final String lastname, @Nonnull final String email) {
+    public User(final long id, @Nonnull final String firstName, @Nonnull final String lastName, @Nonnull final String phone, @Nonnull final String email) {
         super();
         this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
         this.email = email;
     }
 
@@ -37,12 +42,16 @@ public class User {
     }
 
     public @Nullable
-    String getFirstname() {
-        return firstname;
+    String getFirstName() {
+        return firstName;
     }
 
-    public @Nullable String getLastname() {
-        return lastname;
+    public @Nullable String getLastName() {
+        return lastName;
+    }
+
+    public @Nullable String getPhone() {
+        return phone;
     }
 
     public @Nullable String getEmail() {
