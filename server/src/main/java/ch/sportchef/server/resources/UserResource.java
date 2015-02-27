@@ -29,11 +29,11 @@ public class UserResource {
     @GET
     @Path("/{id}")
     public Response readUser(@PathParam("id") final long id) {
-        final Optional<User> user = userService.readUserById(id);
-        if (user.isPresent()) {
+        final Optional<User> optionalUser = userService.readUserById(id);
+        if (!optionalUser.isPresent()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.ok(user).build();
+        return Response.ok(optionalUser.get()).build();
     }
 
     @POST
