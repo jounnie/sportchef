@@ -28,6 +28,10 @@ public class User {
     @Length(min=1, max=100)
     private final String email;
 
+    public User() {
+        this(0, null, null, null, null);
+    }
+
     public User(final long id, @Nonnull final String firstName, @Nonnull final String lastName, @Nonnull final String phone, @Nonnull final String email) {
         super();
         this.id = id;
