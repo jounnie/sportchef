@@ -18,4 +18,14 @@ public class UserShould {
         final User user = new User(1L, "John", "Doe", "+41 79 123 45 67", "john.doe@sportchef.ch");
         assertThat(MAPPER.writeValueAsString(user)).isEqualTo(fixture("fixtures/user.json"));
     }
+
+    @Test
+    public void deserializeFromJSON() throws IOException {
+        final User user = MAPPER.readValue(fixture("fixtures/user.json"), User.class);
+        assertThat(user.getId()).isEqualTo(1L);
+        assertThat(user.getFirstName()).isEqualTo("John");
+        assertThat(user.getLastName()).isEqualTo("Doe");
+        assertThat(user.getPhone()).isEqualTo("+41 79 123 45 67");
+        assertThat(user.getEmail()).isEqualTo("john.doe@sportchef.ch");
+    }
 }
