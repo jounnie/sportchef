@@ -37,6 +37,7 @@ dependencies {
             'io.dropwizard:dropwizard-client:' + dropwizardVersion,
             'io.dropwizard:dropwizard-auth:' + dropwizardVersion,
             'io.dropwizard:dropwizard-assets:' + dropwizardVersion,
+            'io.dropwizard:dropwizard-metrics:' + dropwizardVersion,
             'io.dropwizard:dropwizard-testing:' + dropwizardVersion,
             'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:' + jacksonDatatypeJSR310Version,
             'mysql:mysql-connector-java:' + mysqlConnectorVersion
