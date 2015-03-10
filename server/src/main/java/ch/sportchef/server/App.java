@@ -1,5 +1,6 @@
 package ch.sportchef.server;
 
+import ch.sportchef.server.healthchecks.UserServiceHealthCheck;
 import ch.sportchef.server.resources.UserResource;
 import ch.sportchef.server.services.Service;
 import ch.sportchef.server.services.UserService;
@@ -49,6 +50,8 @@ public class App extends Application<SportChefConfiguration> {
 //        final DBI dbi = factory.build(environment, configuration.getDataSourceFactory(), "mysql");
 
         services.put(UserService.class.hashCode(), new UserService());
+
+        environment.healthChecks().register("userService", new UserServiceHealthCheck());
 
         environment.jersey().register(new UserResource());
     }

@@ -3,6 +3,7 @@ package ch.sportchef.server.resources;
 import ch.sportchef.server.App;
 import ch.sportchef.server.representations.User;
 import ch.sportchef.server.services.UserService;
+import com.codahale.metrics.annotation.Metered;
 
 import javax.validation.Valid;
 import javax.ws.rs.GET;
@@ -28,6 +29,7 @@ public class UserResource {
 
     @GET
     @Path("/{id}")
+    @Metered
     public Response readUser(@PathParam("id") final long id) {
         final Optional<User> optionalUser = userService.readUserById(id);
         if (!optionalUser.isPresent()) {
@@ -37,6 +39,7 @@ public class UserResource {
     }
 
     @POST
+    @Metered
     public Response createUser(@Valid User user) throws URISyntaxException {
         final User newUser = userService.storeUser(user);
         return Response.created(new URI(String.valueOf(newUser.getId()))).build();
