@@ -28,4 +28,11 @@ public class UserShould {
         assertThat(user.getPhone()).isEqualTo("+41 79 123 45 67");
         assertThat(user.getEmail()).isEqualTo("john.doe@sportchef.ch");
     }
+
+    @Test
+    public void haveUsefulToStringImplementation() {
+        final User user = new User(1L, "John", "Doe", "+41 79 123 45 67", "john.doe@sportchef.ch");
+        final String toString = user.toString();
+        assertThat(toString).matches("ch\\.sportchef\\.server\\.representations\\.User@[a-z0-9]{8}\\[id=1,firstName=John,lastName=Doe,phone=\\+41 79 123 45 67,email=john.doe@sportchef.ch\\]");
+    }
 }
