@@ -29,6 +29,7 @@ project.ext {
     jacksonDatatypeJSR310Version = '2.4.0'
     jUnitVersion = '4.11'
     mysqlConnectorVersion = '5.1.34'
+    powerMockVersion = '1.6.1'
 }
 
 dependencies {
@@ -43,9 +44,12 @@ dependencies {
             'mysql:mysql-connector-java:' + mysqlConnectorVersion
     )
     testCompile (
-            'junit:junit:' + jUnitVersion,
             'io.dropwizard:dropwizard-testing:' + dropwizardVersion,
-            'commons-io:commons-io:' + commonsIOVersion
+            'junit:junit:' + jUnitVersion,
+            'commons-io:commons-io:' + commonsIOVersion,
+            'org.powermock:powermock-core:' + powerMockVersion,
+            'org.powermock:powermock-api-mockito:' + powerMockVersion,
+            'org.powermock:powermock-module-junit4:' + powerMockVersion
     )
 }
 
