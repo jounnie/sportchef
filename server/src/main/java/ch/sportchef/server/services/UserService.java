@@ -24,4 +24,8 @@ public class UserService implements Service {
         testUsers.put(Long.valueOf(userToStore.getId()), userToStore);
         return userToStore;
     }
+
+    public void removeUser(final User user) {
+        testUsers.remove(Long.valueOf(user.getId()));
+    }
 }

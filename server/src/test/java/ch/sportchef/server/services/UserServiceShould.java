@@ -54,4 +54,19 @@ public class UserServiceShould {
         final Optional<User> optionalUser = userService.readUserById(3L);
         assertThat(optionalUser.isPresent()).isFalse();
     }
+
+    @Test
+    public void removeJaneDoe() {
+        final Optional<User> janeDoe = userService.readUserById(2L);
+        assertThat(janeDoe.isPresent()).isTrue();
+        userService.removeUser(janeDoe.get());
+        assertThat(userService.readUserById(2L).isPresent()).isFalse();
+    }
+
+    @Test
+    public void removeNonExistingUser() {
+        final User nonExistingUser = new User(3L, null, null, null, null);
+        userService.removeUser(nonExistingUser);
+        assertThat(userService.readUserById(3L).isPresent()).isFalse();
+    }
 }
