@@ -7,9 +7,7 @@ import org.junit.Test;
 
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.fest.assertions.api.Assertions.assertThat;
 
 public class UserServiceShould {
 
@@ -28,32 +26,47 @@ public class UserServiceShould {
     @Test
     public void returnJohnDoe() {
         final Optional<User> optionalUser = userService.readUserById(1L);
-        assertTrue(optionalUser.isPresent());
+        assertThat(optionalUser.isPresent()).isTrue();
 
         final User user = optionalUser.get();
-        assertEquals("wrong user id", 1L, user.getId());
-        assertEquals("wrong first name", "John", user.getFirstName());
-        assertEquals("wrong last name", "Doe", user.getLastName());
-        assertEquals("wrong phone number", "+41 79 123 45 67", user.getPhone());
-        assertEquals("wrong email address", "john.doe@sportchef.ch", user.getEmail());
+        assertThat(user.getId()).isEqualTo(1L);
+        assertThat(user.getFirstName()).isEqualTo("John");
+        assertThat(user.getLastName()).isEqualTo("Doe");
+        assertThat(user.getPhone()).isEqualTo("+41 79 123 45 67");
+        assertThat(user.getEmail()).isEqualTo("john.doe@sportchef.ch");
     }
 
     @Test
     public void returnJaneDoe() {
         final Optional<User> optionalUser = userService.readUserById(2L);
-        assertTrue(optionalUser.isPresent());
+        assertThat(optionalUser.isPresent()).isTrue();
 
         final User user = optionalUser.get();
-        assertEquals("wrong user id", 2L, user.getId());
-        assertEquals("wrong first name", "Jane", user.getFirstName());
-        assertEquals("wrong last name", "Doe", user.getLastName());
-        assertEquals("wrong phone number", "+41 79 234 56 78", user.getPhone());
-        assertEquals("wrong email address", "jane.doe@sportchef.ch", user.getEmail());
+        assertThat(user.getId()).isEqualTo(2L);
+        assertThat(user.getFirstName()).isEqualTo("Jane");
+        assertThat(user.getLastName()).isEqualTo("Doe");
+        assertThat(user.getPhone()).isEqualTo("+41 79 234 56 78");
+        assertThat(user.getEmail()).isEqualTo("jane.doe@sportchef.ch");
     }
 
     @Test
     public void returnNoUser() {
         final Optional<User> optionalUser = userService.readUserById(3L);
-        assertFalse(optionalUser.isPresent());
+        assertThat(optionalUser.isPresent()).isFalse();
+    }
+
+    @Test
+    public void removeJaneDoe() {
+        final Optional<User> janeDoe = userService.readUserById(2L);
+        assertThat(janeDoe.isPresent()).isTrue();
+        userService.removeUser(janeDoe.get());
+        assertThat(userService.readUserById(2L).isPresent()).isFalse();
+    }
+
+    @Test
+    public void removeNonExistingUser() {
+        final User nonExistingUser = new User(3L, null, null, null, null);
+        userService.removeUser(nonExistingUser);
+        assertThat(userService.readUserById(3L).isPresent()).isFalse();
     }
 }

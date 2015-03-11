@@ -24,6 +24,7 @@ repositories {
 
 // Set our project variables
 project.ext {
+    commonsIOVersion = '2.4'
     dropwizardVersion = '0.7.1'
     jacksonDatatypeJSR310Version = '2.4.0'
     jUnitVersion = '4.11'
@@ -38,11 +39,14 @@ dependencies {
             'io.dropwizard:dropwizard-auth:' + dropwizardVersion,
             'io.dropwizard:dropwizard-assets:' + dropwizardVersion,
             'io.dropwizard:dropwizard-metrics:' + dropwizardVersion,
-            'io.dropwizard:dropwizard-testing:' + dropwizardVersion,
             'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:' + jacksonDatatypeJSR310Version,
             'mysql:mysql-connector-java:' + mysqlConnectorVersion
     )
-    testCompile group: 'junit', name: 'junit', version: jUnitVersion
+    testCompile (
+            'junit:junit:' + jUnitVersion,
+            'io.dropwizard:dropwizard-testing:' + dropwizardVersion,
+            'commons-io:commons-io:' + commonsIOVersion
+    )
 }
 
 // Add Gradle OneJarPlugin, see https:github.com/rholder/gradle-one-jar

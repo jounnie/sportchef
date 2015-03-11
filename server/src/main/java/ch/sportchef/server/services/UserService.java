@@ -19,9 +19,13 @@ public class UserService implements Service {
         return Optional.ofNullable(testUsers.get(Long.valueOf(id)));
     }
 
-    public User storeUser(User user) {
+    public User storeUser(final User user) {
         final User userToStore = user.getId() == 0 ? new User(nextFreeUserId++, user.getFirstName(), user.getLastName(), user.getPhone(), user.getEmail()) : user;
         testUsers.put(Long.valueOf(userToStore.getId()), userToStore);
         return userToStore;
+    }
+
+    public void removeUser(final User user) {
+        testUsers.remove(Long.valueOf(user.getId()));
     }
 }
