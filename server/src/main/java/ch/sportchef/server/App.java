@@ -44,8 +44,6 @@ public class App extends Application<SportChefConfiguration> {
 
     @Override
     public void run(@Nonnull final SportChefConfiguration configuration, @Nonnull final Environment environment) throws Exception {
-        environment.jersey().setUrlPattern("/api/*");
-
 //        final DBIFactory factory = new DBIFactory();
 //        final DBI dbi = factory.build(environment, configuration.getDataSourceFactory(), "mysql");
 
