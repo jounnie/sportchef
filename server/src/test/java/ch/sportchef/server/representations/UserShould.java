@@ -7,7 +7,7 @@ import org.junit.Test;
 import java.io.IOException;
 
 import static io.dropwizard.testing.FixtureHelpers.fixture;
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserShould {
 

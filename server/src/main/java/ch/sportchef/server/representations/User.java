@@ -1,8 +1,8 @@
 package ch.sportchef.server.representations;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -31,7 +31,8 @@ public class User {
     @Length(min=1, max=100)
     private final String email;
 
-    public User() {
+    private User() {
+        // Jackson deserialization
         this(0, null, null, null, null);
     }
 

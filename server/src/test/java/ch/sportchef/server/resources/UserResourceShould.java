@@ -4,18 +4,18 @@ import ch.sportchef.server.App;
 import ch.sportchef.server.SportChefConfiguration;
 import ch.sportchef.server.representations.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import io.dropwizard.jackson.Jackson;
 import io.dropwizard.testing.junit.DropwizardAppRule;
 import org.junit.ClassRule;
 import org.junit.Test;
 
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.net.URI;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserResourceShould {
 
@@ -24,15 +24,17 @@ public class UserResourceShould {
 
     @Test
     public void returnJohnDoe() {
-        final Client client = new Client();
+        final WebTarget target = ClientBuilder.newClient().target(
+                String.format("http://localhost:%d/api/user/1", RULE.getLocalPort()));
 
-        final ClientResponse response = client.resource(
-                String.format("http://localhost:%d/api/user/1", RULE.getLocalPort()))
-                .get(ClientResponse.class);
+        final Response response = target
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .get();
 
-        assertThat(response.getStatus()).isEqualTo(ClientResponse.Status.OK.getStatusCode());
+        assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
 
-        final User user = response.getEntity(User.class);
+        final User user = response.readEntity(User.class);
         assertThat(user.getId()).isEqualTo(1L);
         assertThat(user.getFirstName()).isEqualTo("John");
         assertThat(user.getLastName()).isEqualTo("Doe");
@@ -42,15 +44,17 @@ public class UserResourceShould {
 
     @Test
     public void returnJaneDoe() {
-        final Client client = new Client();
+        final WebTarget target = ClientBuilder.newClient().target(
+                String.format("http://localhost:%d/api/user/2", RULE.getLocalPort()));
 
-        final ClientResponse response = client.resource(
-                String.format("http://localhost:%d/api/user/2", RULE.getLocalPort()))
-                .get(ClientResponse.class);
+        final Response response = target
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .get();
 
-        assertThat(response.getStatus()).isEqualTo(ClientResponse.Status.OK.getStatusCode());
+        assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
 
-        final User user = response.getEntity(User.class);
+        final User user = response.readEntity(User.class);
         assertThat(user.getId()).isEqualTo(2L);
         assertThat(user.getFirstName()).isEqualTo("Jane");
         assertThat(user.getLastName()).isEqualTo("Doe");
@@ -60,30 +64,30 @@ public class UserResourceShould {
 
     @Test
     public void returnNotFound() {
-        final Client client = new Client();
+        final WebTarget target = ClientBuilder.newClient().target(
+                String.format("http://localhost:%d/api/user/3", RULE.getLocalPort()));
 
-        final ClientResponse response = client.resource(
-                String.format("http://localhost:%d/api/user/3", RULE.getLocalPort()))
-                .get(ClientResponse.class);
+        final Response response = target
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .get();
 
-        assertThat(response.getStatus()).isEqualTo(ClientResponse.Status.NOT_FOUND.getStatusCode());
+        assertThat(response.getStatus()).isEqualTo(Response.Status.NOT_FOUND.getStatusCode());
     }
 
     @Test
     public void createTheNewUserJimDoe() throws JsonProcessingException {
-        final Client client = new Client();
-        final ObjectMapper mapper = Jackson.newObjectMapper();
+        final WebTarget target = ClientBuilder.newClient().target(
+                String.format("http://localhost:%d/api/user", RULE.getLocalPort()));
 
         final User user = new User(0L, "Jim", "Doe", "+41 79 098 76 54", "jim.doe@sportchef.ch");
-        final String userJSON = mapper.writeValueAsString(user);
 
-        final ClientResponse response = client.resource(
-                String.format("http://localhost:%d/api/user", RULE.getLocalPort()))
-                .accept(MediaType.APPLICATION_JSON)
-                .type(MediaType.APPLICATION_JSON)
-                .post(ClientResponse.class, userJSON);
+        final Response response = target
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .post(Entity.json(user));
 
-        assertThat(response.getStatus()).isEqualTo(ClientResponse.Status.CREATED.getStatusCode());
+        assertThat(response.getStatus()).isEqualTo(Response.Status.CREATED.getStatusCode());
 
         final URI location = response.getLocation();
         assertThat(location).isNotNull();
