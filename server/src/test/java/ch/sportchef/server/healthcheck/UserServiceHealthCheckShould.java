@@ -4,13 +4,14 @@ import ch.sportchef.server.App;
 import ch.sportchef.server.SportChefConfiguration;
 import ch.sportchef.server.representations.User;
 import ch.sportchef.server.services.UserService;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
 import io.dropwizard.testing.junit.DropwizardAppRule;
-import org.apache.commons.io.IOUtils;
 import org.junit.ClassRule;
 import org.junit.Test;
 
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,15 +23,17 @@ public class UserServiceHealthCheckShould {
 
     @Test
     public void returnHealthy() throws IOException {
-        final Client client = new Client();
+        final WebTarget target = ClientBuilder.newClient().target(
+                String.format("http://localhost:%d/healthcheck", RULE.getAdminPort()));
 
-        final ClientResponse response = client.resource(
-                String.format("http://localhost:%d/healthcheck", RULE.getAdminPort()))
-                .get(ClientResponse.class);
+        final Response response = target
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .get();
 
-        assertThat(response.getStatus()).isEqualTo(ClientResponse.Status.OK.getStatusCode());
+        assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
 
-        final String body = IOUtils.toString(response.getEntityInputStream());
+        final String body = response.readEntity(String.class);
         assertThat(body).contains("UserService is fine.");
     }
 
@@ -40,15 +43,17 @@ public class UserServiceHealthCheckShould {
         final User user = userService.readUserById(1L).get();
         userService.removeUser(user);
 
-        final Client client = new Client();
+        final WebTarget target = ClientBuilder.newClient().target(
+                String.format("http://localhost:%d/healthcheck", RULE.getAdminPort()));
 
-        final ClientResponse response = client.resource(
-                String.format("http://localhost:%d/healthcheck", RULE.getAdminPort()))
-                .get(ClientResponse.class);
+        final Response response = target
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .get();
 
-        assertThat(response.getStatus()).isEqualTo(ClientResponse.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        assertThat(response.getStatus()).isEqualTo(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
 
-        final String body = IOUtils.toString(response.getEntityInputStream());
+        final String body = response.readEntity(String.class);
         assertThat(body).contains("UserService has problems returning the correct reference user!");
     }
 }

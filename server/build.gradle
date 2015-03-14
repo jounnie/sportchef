@@ -46,7 +46,6 @@ dependencies {
     testCompile (
             'io.dropwizard:dropwizard-testing:' + dropwizardVersion,
             'junit:junit:' + jUnitVersion,
-            'commons-io:commons-io:' + commonsIOVersion,
             'org.powermock:powermock-core:' + powerMockVersion,
             'org.powermock:powermock-api-mockito:' + powerMockVersion,
             'org.powermock:powermock-module-junit4:' + powerMockVersion

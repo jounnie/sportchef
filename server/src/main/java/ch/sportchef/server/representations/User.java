@@ -31,7 +31,8 @@ public class User {
     @Length(min=1, max=100)
     private final String email;
 
-    public User() {
+    private User() {
+        // Jackson deserialization
         this(0, null, null, null, null);
     }
 
