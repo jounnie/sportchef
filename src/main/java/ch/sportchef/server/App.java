@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
+import io.dropwizard.db.DataSourceFactory;
+import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.slf4j.Logger;
@@ -36,6 +38,14 @@ public class App extends Application<SportChefConfiguration> {
     public void initialize(@Nonnull final Bootstrap<SportChefConfiguration> bootstrap) {
         // Configure Assets
         bootstrap.addBundle(new AssetsBundle("/assets/", "/", "html/index.html"));
+
+        // Configure Migrations
+        bootstrap.addBundle(new MigrationsBundle<SportChefConfiguration>() {
+            @Override
+            public DataSourceFactory getDataSourceFactory(SportChefConfiguration configuration) {
+                return configuration.getDataSourceFactory();
+            }
+        });
 
         // Register additional Jackson modules
         final ObjectMapper mapper = new ObjectMapper();
