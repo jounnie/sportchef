@@ -1,5 +1,6 @@
 package ch.sportchef.server;
 
+import ch.sportchef.server.dao.UserDAO;
 import ch.sportchef.server.healthchecks.UserServiceHealthCheck;
 import ch.sportchef.server.resources.UserResource;
 import ch.sportchef.server.services.Service;
@@ -9,9 +10,11 @@ import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.db.DataSourceFactory;
+import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.skife.jdbi.v2.DBI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,8 +57,13 @@ public class App extends Application<SportChefConfiguration> {
 
     @Override
     public void run(@Nonnull final SportChefConfiguration configuration, @Nonnull final Environment environment) throws Exception {
+        final DBIFactory factory = new DBIFactory();
+        final DBI dbi = factory.build(environment, configuration.getDataSourceFactory(), "h2");
+
+        final UserDAO userDAO = dbi.onDemand(UserDAO.class);
+
         // Initialize services
-        services.put(UserService.class.hashCode(), new UserService());
+        services.put(UserService.class.hashCode(), new UserService(userDAO));
 
         // Initialize health checks
         environment.healthChecks().register("userService", new UserServiceHealthCheck());
