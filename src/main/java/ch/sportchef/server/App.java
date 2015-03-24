@@ -44,13 +44,13 @@ public class App extends Application<SportChefConfiguration> {
 
     @Override
     public void run(@Nonnull final SportChefConfiguration configuration, @Nonnull final Environment environment) throws Exception {
-//        final DBIFactory factory = new DBIFactory();
-//        final DBI dbi = factory.build(environment, configuration.getDataSourceFactory(), "mysql");
-
+        // Initialize services
         services.put(UserService.class.hashCode(), new UserService());
 
+        // Initialize health checks
         environment.healthChecks().register("userService", new UserServiceHealthCheck());
 
+        // Initialize resources
         environment.jersey().register(new UserResource());
     }
 }
