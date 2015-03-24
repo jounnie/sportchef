@@ -1,6 +1,8 @@
 *SportChef*
 ======
 
+[![Build Status](https://travis-ci.org/McPringle/sportchef.svg?branch=master)](https://travis-ci.org/McPringle/sportchef)
+
 **Sports Competition Management Software with a modern and fast architecture. Java based backend with a RESTful JSON API and a HTML 5 client.**
 
 *Copyright (C) 2015 Marcus Fihlon*
