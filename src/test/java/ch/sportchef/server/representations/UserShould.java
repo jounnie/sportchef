@@ -33,6 +33,11 @@ public class UserShould {
     public void haveUsefulToStringImplementation() {
         final User user = new User(1L, "John", "Doe", "+41 79 123 45 67", "john.doe@sportchef.ch");
         final String toString = user.toString();
-        assertThat(toString).matches("ch\\.sportchef\\.server\\.representations\\.User@[a-z0-9]{8}\\[id=1,firstName=John,lastName=Doe,phone=\\+41 79 123 45 67,email=john.doe@sportchef.ch\\]");
+        assertThat(toString).contains("ch.sportchef.server.representations.User");
+        assertThat(toString).contains("id=1");
+        assertThat(toString).contains("firstName=John");
+        assertThat(toString).contains("lastName=Doe");
+        assertThat(toString).contains("phone=+41 79 123 45 67");
+        assertThat(toString).contains("email=john.doe@sportchef.ch");
     }
 }
