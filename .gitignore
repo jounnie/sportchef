@@ -3,4 +3,5 @@
 .idea
 *.iml
 build/
-logs
+coverage/
+logs/
