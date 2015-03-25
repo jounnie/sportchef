@@ -22,6 +22,7 @@ public class UserShould {
     @Test
     public void deserializeFromJSON() throws IOException {
         final User user = MAPPER.readValue(fixture("fixtures/user.json"), User.class);
+        assertThat(user).isNotNull();
         assertThat(user.getId()).isEqualTo(1L);
         assertThat(user.getFirstName()).isEqualTo("John");
         assertThat(user.getLastName()).isEqualTo("Doe");
