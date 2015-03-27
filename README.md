@@ -1,7 +1,7 @@
 *SportChef*
 ======
 
-[![Build Status](https://travis-ci.org/McPringle/sportchef.svg?branch=master)](https://travis-ci.org/McPringle/sportchef)
+[![Build Status](https://travis-ci.org/McPringle/sportchef.svg?branch=master)](https://travis-ci.org/McPringle/sportchef) [![Coverity Scan Build Status](https://scan.coverity.com/projects/4632/badge.svg)](https://scan.coverity.com/projects/4632)
 
 **Sports Competition Management Software with a modern and fast architecture. Java based backend with a RESTful JSON API and a HTML 5 client.**
 
