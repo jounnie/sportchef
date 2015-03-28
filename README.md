@@ -1,7 +1,7 @@
 *SportChef*
 ======
 
-[![Build Status](https://travis-ci.org/McPringle/sportchef.svg?branch=master)](https://travis-ci.org/McPringle/sportchef) [![Coverity Scan Build Status](https://scan.coverity.com/projects/4632/badge.svg)](https://scan.coverity.com/projects/4632)
+[![Build Status](https://travis-ci.org/McPringle/sportchef.svg?branch=master)](https://travis-ci.org/McPringle/sportchef) [![Coverity Scan Build Status](https://scan.coverity.com/projects/4632/badge.svg)](https://scan.coverity.com/projects/4632) [![Dependency Status](https://www.versioneye.com/user/projects/5517e829eaf3fa261e000003/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5517e829eaf3fa261e000003)
 
 **Sports Competition Management Software with a modern and fast architecture. Java based backend with a RESTful JSON API and a HTML 5 client.**
 
