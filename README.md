@@ -1,7 +1,7 @@
 *SportChef*
 ======
 
-[![Build Status](https://travis-ci.org/McPringle/sportchef.svg?branch=master)](https://travis-ci.org/McPringle/sportchef) [![Coverage Status](https://coveralls.io/repos/McPringle/sportchef/badge.svg)](https://coveralls.io/r/McPringle/sportchef) [![Coverity Scan Build Status](https://scan.coverity.com/projects/4632/badge.svg)](https://scan.coverity.com/projects/4632) [![Dependency Status](https://www.versioneye.com/user/projects/5517e829eaf3fa261e000003/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5517e829eaf3fa261e000003)
+[![Build Status](https://travis-ci.org/McPringle/sportchef.svg?branch=master)](https://travis-ci.org/McPringle/sportchef) [![Coverage Status](https://coveralls.io/repos/McPringle/sportchef/badge.svg)](https://coveralls.io/r/McPringle/sportchef) [![Coverity Scan Build Status](https://scan.coverity.com/projects/4632/badge.svg)](https://scan.coverity.com/projects/4632) [![Dependency Status](https://www.versioneye.com/user/projects/5517e829eaf3fa261e000003/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5517e829eaf3fa261e000003) [![Issue Stats](http://issuestats.com/github/McPringle/sportchef/badge/issue)](http://issuestats.com/github/McPringle/sportchef) [![Issue Stats](http://issuestats.com/github/McPringle/sportchef/badge/pr)](http://issuestats.com/github/McPringle/sportchef)
 
 **Sports Competition Management Software with a modern and fast architecture. Java based backend with a RESTful JSON API and a HTML 5 client.**
 
