@@ -2,6 +2,8 @@ apply plugin: 'idea'
 apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'gradle-one-jar'
+apply plugin: 'jacoco'
+apply plugin: 'com.github.kt3k.coveralls'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -41,7 +43,6 @@ dependencies {
     )
 }
 
-// Add Gradle OneJarPlugin, see https:github.com/rholder/gradle-one-jar
 buildscript {
     repositories {
         mavenCentral()
@@ -49,9 +50,18 @@ buildscript {
 
     dependencies {
         classpath 'com.github.rholder:gradle-one-jar:1.0.4'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.3.1'
     }
 }
+
 task oneJar(type: OneJar) {
     mainClass = 'ch.sportchef.server.App'
     archiveName = 'sportchef-server.jar'
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
 }
