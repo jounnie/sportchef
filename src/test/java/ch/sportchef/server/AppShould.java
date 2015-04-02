@@ -1,10 +1,13 @@
 package ch.sportchef.server;
 
+import ch.sportchef.server.dao.UserDAO;
 import ch.sportchef.server.healthchecks.UserServiceHealthCheck;
 import ch.sportchef.server.resources.UserResource;
 import ch.sportchef.server.services.UserService;
 import com.codahale.metrics.health.HealthCheckRegistry;
 import io.dropwizard.Bundle;
+import io.dropwizard.db.DataSourceFactory;
+import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.jersey.setup.JerseyEnvironment;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -12,9 +15,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.skife.jdbi.v2.DBI;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.anyVararg;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
@@ -31,7 +36,7 @@ public class AppShould {
     public void startWithArguments() throws Exception {
         final App appMock = mock(App.class);
         whenNew(App.class).withNoArguments().thenReturn(appMock);
-        App.main(new String[]{"server", "config.yaml"});
+        App.main(new String[]{"server", "config-test.yaml"});
         verify(appMock, times(1)).run(anyVararg());
     }
 
@@ -41,18 +46,27 @@ public class AppShould {
 
         new App().initialize(bootstrap);
 
-        verify(bootstrap, times(1)).addBundle(any(Bundle.class));
+        verify(bootstrap, times(2)).addBundle(any(Bundle.class));
     }
 
     @Test
     public void runProperly() throws Exception {
         final SportChefConfiguration configuration = mock(SportChefConfiguration.class);
-        final Environment environment = mock (Environment.class);
         final HealthCheckRegistry healthCheckRegistry = mock(HealthCheckRegistry.class);
         final JerseyEnvironment jerseyEnvironment = mock(JerseyEnvironment.class);
+        final UserDAO userDAO = mock(UserDAO.class);
 
+        final DBI dbi = mock(DBI.class);
+        when(dbi.onDemand(any())).thenReturn(userDAO);
+
+        final DBIFactory dbiFactory = mock(DBIFactory.class);
+        whenNew(DBIFactory.class).withNoArguments().thenReturn(dbiFactory);
+        when(dbiFactory.build(any(Environment.class), any(DataSourceFactory.class), anyString())).thenReturn(dbi);
+
+        final Environment environment = mock (Environment.class);
         when(environment.healthChecks()).thenReturn(healthCheckRegistry);
         when(environment.jersey()).thenReturn(jerseyEnvironment);
+        when(environment.metrics()).thenReturn(null);
 
         new App().run(configuration, environment);
 
