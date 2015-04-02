@@ -8,6 +8,7 @@ import com.codahale.metrics.annotation.Timed;
 import javax.validation.Valid;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -43,5 +44,16 @@ public class UserResource {
     public Response createUser(@Valid User user) throws URISyntaxException {
         final User newUser = userService.storeUser(user);
         return Response.created(new URI(String.valueOf(newUser.getId()))).build();
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Timed
+    public Response updateUser(@PathParam("id") final long id, @Valid User user) throws URISyntaxException {
+        if (id != user.getId()) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        final User updateUser = userService.storeUser(user);
+        return Response.ok(new URI(String.valueOf(updateUser.getId()))).build();
     }
 }

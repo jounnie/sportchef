@@ -37,6 +37,7 @@ public class UserResourceShould {
         final UserService userService = App.getService(UserService.class);
         johnDoe = userService.storeUser(UserGenerator.getJohnDoe(0L));
         janeDoe = userService.storeUser(UserGenerator.getJaneDoe(0L));
+        joyDoe = userService.storeUser(UserGenerator.getJoyDoe(0L));
     }
 
     @AfterClass
@@ -46,6 +47,7 @@ public class UserResourceShould {
 
     private static User johnDoe = null;
     private static User janeDoe = null;
+    private static User joyDoe = null;
 
     @Test
     public void returnJohnDoe() {
@@ -112,5 +114,31 @@ public class UserResourceShould {
         final String path = location.getPath();
         final long newId = Long.parseLong(path.substring(path.lastIndexOf("/") + 1));
         assertThat(newId).isGreaterThan(0);
+    }
+
+    @Test
+    public void updateJoyDoe() {
+        final WebTarget target = ClientBuilder.newClient().target(
+                String.format("http://localhost:%d/api/user/%d", RULE.getLocalPort(), joyDoe.getId()));
+
+        final Response response = target
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .put(Entity.json(joyDoe));
+
+        assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
+    }
+
+    @Test
+    public void notUpdateJoyDoe() {
+        final WebTarget target = ClientBuilder.newClient().target(
+                String.format("http://localhost:%d/api/user/%d", RULE.getLocalPort(), janeDoe.getId()));
+
+        final Response response = target
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .put(Entity.json(joyDoe));
+
+        assertThat(response.getStatus()).isEqualTo(Response.Status.BAD_REQUEST.getStatusCode());
     }
 }
