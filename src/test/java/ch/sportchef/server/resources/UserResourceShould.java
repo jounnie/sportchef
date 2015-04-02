@@ -97,7 +97,7 @@ public class UserResourceShould {
         final WebTarget target = ClientBuilder.newClient().target(
                 String.format("http://localhost:%d/api/user", RULE.getLocalPort()));
 
-        final User user = new User(0L, "Jim", "Doe", "+41 79 555 00 03", "jim.doe@sportchef.ch");
+        final User user = UserGenerator.getJimDoe(0L);
 
         final Response response = target
                 .request(MediaType.APPLICATION_JSON_TYPE)
