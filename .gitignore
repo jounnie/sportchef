@@ -1,7 +1,8 @@
+*.iml
+*.log
 .DS_Store
 .gradle
 .idea
-*.iml
 build/
 coverage/
 logs/
