@@ -17,7 +17,7 @@ logging:
       threshold: INFO
       target: stdout
     - type: file
-      currentLogFilename: ./logs/sportchef-server.log
-      archivedLogFilenamePattern: ./logs/sportchef-server-%d.log.gz
+      currentLogFilename: ./logs/sportchef.log
+      archivedLogFilenamePattern: ./logs/sportchef-%d.log.gz
       archivedFileCount: 5
       timeZone: UTC
