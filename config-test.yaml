@@ -5,7 +5,7 @@ database:
   driverClass: org.h2.Driver
   user: sa
   password:
-  url: jdbc:h2:./sportchef
+  url: jdbc:h2:mem:sportchef-test
   properties:
     charSet: UTF-8
   validationQuery: "/* Health Check */ SELECT 1"
@@ -17,7 +17,7 @@ logging:
       threshold: INFO
       target: stdout
     - type: file
-      currentLogFilename: ./logs/sportchef.log
-      archivedLogFilenamePattern: ./logs/sportchef-%d.log.gz
+      currentLogFilename: ./logs/sportchef-test.log
+      archivedLogFilenamePattern: ./logs/sportchef-test-%d.log.gz
       archivedFileCount: 5
       timeZone: UTC
