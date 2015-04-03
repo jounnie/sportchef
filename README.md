@@ -13,6 +13,24 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 You should have received a copy of the GNU Affero General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# Technology
+
+## Server
+
+We use [Dropwizard](http://www.dropwizard.io), a simple and leight-weight Java framework for developing ops-friendly, high-performance, RESTful web services. The database of our choice is [H2](http://h2database.com/), which uses a database file in production mode and an in memory database for integration tests. [Liquibase](http://www.liquibase.org/) is responsible for populating and migrating the database schema. For testing purposes we are using [JUnit](http://junit.org/), [AssertJ](http://joel-costigliola.github.io/assertj/), [Mockito](http://mockito.org/) and [PowerMock](https://code.google.com/p/powermock/). Everything is tied together using a [Gradle](http://gradle.org/) build.
+
+## Client
+
+For the client we decided wo go with [AngularJS](https://angularjs.org/) and [TypeScript](http://www.typescriptlang.org/). In the next weeks we need to decide which technology we'll use for testing the client and if we want to use a UI framework and/or an icon library.
+
+## Website
+
+We'll use [GitHub Pages](https://pages.github.com/) for hosting our upcoming project website. We only need static content, so we decided to go with [Hugo](http://gohugo.io/), a fast and modern static website engine. Our content will be written in [Markdown](http://en.wikipedia.org/wiki/Markdown) syntax.
+
+## Tools
+
+We use a [Gradle](http://gradle.org/) build to tie everything together. As a result this project is IDE independent (every state-of-the-art IDE should be able to import and/or use a Gradle project). Every push to our [main repository](https://github.com/McPringle/sportchef) will be built automatically by [Travis-CI](https://travis-ci.org/McPringle/sportchef) and checked by [Coveralls](https://coveralls.io/r/McPringle/sportchef?branch=master). From time to time we'll check the code with [Coverity](https://scan.coverity.com/projects/4632), too. [VersionEye](https://www.versioneye.com/user/projects/5517e829eaf3fa261e000003) is used to track out of date dependencies. To track our reaction time on issues and pull requests we use [Issue Stats](http://issuestats.com/github/McPringle/sportchef).
+
 # How to contribute to *SportChef*
 
 ## Source code management
