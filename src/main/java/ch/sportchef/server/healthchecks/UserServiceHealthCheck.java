@@ -14,7 +14,7 @@ public class UserServiceHealthCheck extends HealthCheck {
 
     public UserServiceHealthCheck() {
         this.userService = App.getService(UserService.class);
-        this.referenceUser = new User(1L, "John", "Doe", "+41 79 123 45 67", "john.doe@sportchef.ch");
+        this.referenceUser = new User(1L, "John", "Doe", "+41 79 555 00 01", "john.doe@sportchef.ch");
     }
 
     @Override

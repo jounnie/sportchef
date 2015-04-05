@@ -4,7 +4,14 @@ import ch.sportchef.server.App;
 import ch.sportchef.server.SportChefConfiguration;
 import ch.sportchef.server.representations.User;
 import ch.sportchef.server.services.UserService;
+import ch.sportchef.server.utils.LiquibaseUtil;
+import ch.sportchef.server.utils.UserGenerator;
 import io.dropwizard.testing.junit.DropwizardAppRule;
+import liquibase.exception.DatabaseException;
+import liquibase.exception.LiquibaseException;
+import liquibase.exception.LockException;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -13,13 +20,26 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserServiceHealthCheckShould {
 
     @ClassRule
-    public static final DropwizardAppRule<SportChefConfiguration> RULE = new DropwizardAppRule<>(App.class, "config.yaml");
+    public static final DropwizardAppRule<SportChefConfiguration> RULE = new DropwizardAppRule<>(App.class, "config-test.yaml");
+
+    @BeforeClass
+    public static void setup() throws SQLException, LiquibaseException {
+        LiquibaseUtil.migrate(RULE);
+        final UserService userService = App.getService(UserService.class);
+        userService.storeUser(UserGenerator.getJohnDoe(0L));
+    }
+
+    @AfterClass
+    public static void tearDown() throws DatabaseException, LockException {
+        LiquibaseUtil.dropAll();
+    }
 
     @Test
     public void returnHealthy() throws IOException {
