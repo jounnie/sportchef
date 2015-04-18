@@ -1,8 +1,11 @@
 package ch.sportchef.server;
 
 import ch.sportchef.server.dao.UserDAO;
+import ch.sportchef.server.healthchecks.LicenseServiceHealthCheck;
 import ch.sportchef.server.healthchecks.UserServiceHealthCheck;
+import ch.sportchef.server.resources.LicenseResource;
 import ch.sportchef.server.resources.UserResource;
+import ch.sportchef.server.services.LicenseService;
 import ch.sportchef.server.services.Service;
 import ch.sportchef.server.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -56,12 +59,15 @@ public class App extends Application<SportChefConfiguration> {
         final UserDAO userDAO = dbi.onDemand(UserDAO.class);
 
         // Initialize services
+        services.put(LicenseService.class.hashCode(), new LicenseService());
         services.put(UserService.class.hashCode(), new UserService(userDAO));
 
         // Initialize health checks
+        environment.healthChecks().register("licenseService", new LicenseServiceHealthCheck());
         environment.healthChecks().register("userService", new UserServiceHealthCheck());
 
         // Initialize resources
+        environment.jersey().register(new LicenseResource());
         environment.jersey().register(new UserResource());
     }
 }
