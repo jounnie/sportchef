@@ -9,7 +9,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 // Year and month
-version = '15.01'
+version = '15.04'
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
@@ -26,18 +26,18 @@ repositories {
 
 dependencies {
     compile (
-            'io.dropwizard:dropwizard-core:0.8.0',
-            'io.dropwizard:dropwizard-jdbi:0.8.0',
-            'io.dropwizard:dropwizard-client:0.8.0',
-            'io.dropwizard:dropwizard-auth:0.8.0',
-            'io.dropwizard:dropwizard-assets:0.8.0',
-            'io.dropwizard:dropwizard-metrics:0.8.0',
-            'io.dropwizard:dropwizard-migrations:0.8.0',
-            'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.5.1',
-            'com.h2database:h2:1.4.186'
+            'io.dropwizard:dropwizard-core:0.8.1',
+            'io.dropwizard:dropwizard-jdbi:0.8.1',
+            'io.dropwizard:dropwizard-client:0.8.1',
+            'io.dropwizard:dropwizard-auth:0.8.1',
+            'io.dropwizard:dropwizard-assets:0.8.1',
+            'io.dropwizard:dropwizard-metrics:0.8.1',
+            'io.dropwizard:dropwizard-migrations:0.8.1',
+            'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.5.2',
+            'com.h2database:h2:1.4.187'
     )
     testCompile (
-            'io.dropwizard:dropwizard-testing:0.8.0',
+            'io.dropwizard:dropwizard-testing:0.8.1',
             'junit:junit:4.12',
             'org.powermock:powermock-core:1.6.2',
             'org.powermock:powermock-api-mockito:1.6.2',
@@ -58,7 +58,7 @@ buildscript {
 
 task oneJar(type: OneJar) {
     mainClass = 'ch.sportchef.server.App'
-    archiveName = 'sportchef-server.jar'
+    archiveName = 'sportchef-server-' + version + '.jar'
 }
 
 jacocoTestReport {
