@@ -27,7 +27,7 @@ public class App extends Application<SportChefConfiguration> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
 
-    private static final Map<Integer, Service> services = new HashMap<>();
+    private static final Map<String, Service> services = new HashMap<>();
 
     public static void main(@Nonnull final String[] args) throws Exception {
         LOGGER.info("Starting application with arguments: %s", new Object[]{args});
@@ -35,7 +35,7 @@ public class App extends Application<SportChefConfiguration> {
     }
 
     public static <T extends Service> T getService(Class<T> serviceClass) {
-        return serviceClass.cast(services.get(serviceClass.hashCode()));
+        return serviceClass.cast(services.get(serviceClass.getName()));
     }
 
     @Override
@@ -59,8 +59,8 @@ public class App extends Application<SportChefConfiguration> {
         final UserDAO userDAO = dbi.onDemand(UserDAO.class);
 
         // Initialize services
-        services.put(LicenseService.class.hashCode(), new LicenseService());
-        services.put(UserService.class.hashCode(), new UserService(userDAO));
+        services.put(LicenseService.class.getName(), new LicenseService());
+        services.put(UserService.class.getName(), new UserService(userDAO));
 
         // Initialize health checks
         environment.healthChecks().register("licenseService", new LicenseServiceHealthCheck());
