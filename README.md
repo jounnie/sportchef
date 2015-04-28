@@ -31,6 +31,14 @@ We'll use [GitHub Pages](https://pages.github.com/) for hosting our upcoming pro
 
 We use a [Gradle](http://gradle.org/) build to tie everything together. As a result this project is IDE independent (every state-of-the-art IDE should be able to import and/or use a Gradle project). Every push to our [main repository](https://github.com/McPringle/sportchef) will be built automatically by [Travis-CI](https://travis-ci.org/McPringle/sportchef) and checked by [Coveralls](https://coveralls.io/r/McPringle/sportchef?branch=master). From time to time we'll check the code with [Coverity](https://scan.coverity.com/projects/4632), too. [VersionEye](https://www.versioneye.com/user/projects/5517e829eaf3fa261e000003) is used to track out of date dependencies. To track our reaction time on issues and pull requests we use [Issue Stats](http://issuestats.com/github/McPringle/sportchef).
 
+# Installation
+
+## Database Migration
+
+To migrate your database you simply have to call *SportChef* with the database migration parameters:
+
+```java -jar sportchef-version.jar db migrate config.yaml```
+
 # How to contribute to *SportChef*
 
 ## Source code management
