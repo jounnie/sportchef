@@ -40,11 +40,6 @@ public class UserResourceShould {
         joyDoe = userService.storeUser(UserGenerator.getJoyDoe(0L));
     }
 
-    @AfterClass
-    public static void tearDown() throws DatabaseException, LockException {
-        LiquibaseUtil.dropAll();
-    }
-
     private static User johnDoe = null;
     private static User janeDoe = null;
     private static User joyDoe = null;
