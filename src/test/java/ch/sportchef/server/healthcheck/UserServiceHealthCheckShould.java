@@ -7,10 +7,7 @@ import ch.sportchef.server.services.UserService;
 import ch.sportchef.server.utils.LiquibaseUtil;
 import ch.sportchef.server.utils.UserGenerator;
 import io.dropwizard.testing.junit.DropwizardAppRule;
-import liquibase.exception.DatabaseException;
 import liquibase.exception.LiquibaseException;
-import liquibase.exception.LockException;
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -34,11 +31,6 @@ public class UserServiceHealthCheckShould {
         LiquibaseUtil.migrate(RULE);
         final UserService userService = App.getService(UserService.class);
         userService.storeUser(UserGenerator.getJohnDoe(0L));
-    }
-
-    @AfterClass
-    public static void tearDown() throws DatabaseException, LockException {
-        LiquibaseUtil.dropAll();
     }
 
     @Test
