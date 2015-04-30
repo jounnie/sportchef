@@ -9,6 +9,8 @@ database:
   properties:
     charSet: UTF-8
   validationQuery: "/* Health Check */ SELECT 1"
+  migrateOnStart: false
+  dropAllBeforeMigration: false
 
 logging:
   level: ALL

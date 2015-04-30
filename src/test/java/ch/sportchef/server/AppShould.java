@@ -1,9 +1,9 @@
 package ch.sportchef.server;
 
 import ch.sportchef.server.dao.UserDAO;
-import ch.sportchef.server.healthchecks.UserServiceHealthCheck;
-import ch.sportchef.server.resources.UserResource;
+import ch.sportchef.server.services.LicenseService;
 import ch.sportchef.server.services.UserService;
+import com.codahale.metrics.health.HealthCheck;
 import com.codahale.metrics.health.HealthCheckRegistry;
 import io.dropwizard.Bundle;
 import io.dropwizard.db.DataSourceFactory;
@@ -21,7 +21,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.anyVararg;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -51,7 +50,6 @@ public class AppShould {
 
     @Test
     public void runProperly() throws Exception {
-        final SportChefConfiguration configuration = mock(SportChefConfiguration.class);
         final HealthCheckRegistry healthCheckRegistry = mock(HealthCheckRegistry.class);
         final JerseyEnvironment jerseyEnvironment = mock(JerseyEnvironment.class);
         final UserDAO userDAO = mock(UserDAO.class);
@@ -63,6 +61,12 @@ public class AppShould {
         whenNew(DBIFactory.class).withNoArguments().thenReturn(dbiFactory);
         when(dbiFactory.build(any(Environment.class), any(DataSourceFactory.class), anyString())).thenReturn(dbi);
 
+        final SportChefDataSourceFactory dataSourceFactory = mock(SportChefDataSourceFactory.class);
+        when(dataSourceFactory.isMigrateOnStart()).thenReturn(false);
+
+        final SportChefConfiguration configuration = mock(SportChefConfiguration.class);
+        when(configuration.getDataSourceFactory()).thenReturn(dataSourceFactory);
+
         final Environment environment = mock (Environment.class);
         when(environment.healthChecks()).thenReturn(healthCheckRegistry);
         when(environment.jersey()).thenReturn(jerseyEnvironment);
@@ -70,8 +74,10 @@ public class AppShould {
 
         new App().run(configuration, environment);
 
+        assertThat(App.getService(LicenseService.class)).isNotNull();
         assertThat(App.getService(UserService.class)).isNotNull();
-        verify(healthCheckRegistry, times(1)).register(eq("userService"), any(UserServiceHealthCheck.class));
-        verify(jerseyEnvironment, times(1)).register(any(UserResource.class));
+
+        verify(healthCheckRegistry, times(2)).register(anyString(), any(HealthCheck.class));
+        verify(jerseyEnvironment, times(2)).register(any(Object.class));
     }
 }

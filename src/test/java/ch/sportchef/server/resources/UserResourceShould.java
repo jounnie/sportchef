@@ -4,14 +4,10 @@ import ch.sportchef.server.App;
 import ch.sportchef.server.SportChefConfiguration;
 import ch.sportchef.server.representations.User;
 import ch.sportchef.server.services.UserService;
-import ch.sportchef.server.utils.LiquibaseUtil;
 import ch.sportchef.server.utils.UserGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.dropwizard.testing.junit.DropwizardAppRule;
-import liquibase.exception.DatabaseException;
 import liquibase.exception.LiquibaseException;
-import liquibase.exception.LockException;
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -33,16 +29,10 @@ public class UserResourceShould {
 
     @BeforeClass
     public static void setup() throws SQLException, LiquibaseException {
-        LiquibaseUtil.migrate(RULE);
         final UserService userService = App.getService(UserService.class);
         johnDoe = userService.storeUser(UserGenerator.getJohnDoe(0L));
         janeDoe = userService.storeUser(UserGenerator.getJaneDoe(0L));
         joyDoe = userService.storeUser(UserGenerator.getJoyDoe(0L));
-    }
-
-    @AfterClass
-    public static void tearDown() throws DatabaseException, LockException {
-        LiquibaseUtil.dropAll();
     }
 
     private static User johnDoe = null;

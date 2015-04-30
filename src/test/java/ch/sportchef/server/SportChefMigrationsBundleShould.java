@@ -1,6 +1,5 @@
 package ch.sportchef.server;
 
-import io.dropwizard.db.DataSourceFactory;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -12,7 +11,7 @@ public class SportChefMigrationsBundleShould {
     @Test
     public void returnDataSourceFactory() {
         final SportChefConfiguration configuration = mock(SportChefConfiguration.class);
-        final DataSourceFactory factory = mock(DataSourceFactory.class);
+        final SportChefDataSourceFactory factory = mock(SportChefDataSourceFactory.class);
         when(configuration.getDataSourceFactory()).thenReturn(factory);
 
         final SportChefMigrationsBundle bundle = new SportChefMigrationsBundle();

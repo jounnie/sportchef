@@ -33,7 +33,7 @@ dependencies {
             'io.dropwizard:dropwizard-assets:0.8.1',
             'io.dropwizard:dropwizard-metrics:0.8.1',
             'io.dropwizard:dropwizard-migrations:0.8.1',
-            'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.5.2',
+            'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.5.3',
             'com.h2database:h2:1.4.187'
     )
     testCompile (

@@ -1,10 +1,14 @@
 package ch.sportchef.server;
 
 import ch.sportchef.server.dao.UserDAO;
+import ch.sportchef.server.healthchecks.LicenseServiceHealthCheck;
 import ch.sportchef.server.healthchecks.UserServiceHealthCheck;
+import ch.sportchef.server.resources.LicenseResource;
 import ch.sportchef.server.resources.UserResource;
+import ch.sportchef.server.services.LicenseService;
 import ch.sportchef.server.services.Service;
 import ch.sportchef.server.services.UserService;
+import ch.sportchef.server.utils.LiquibaseUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import io.dropwizard.Application;
@@ -24,7 +28,7 @@ public class App extends Application<SportChefConfiguration> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
 
-    private static final Map<Integer, Service> services = new HashMap<>();
+    private static final Map<String, Service> services = new HashMap<>();
 
     public static void main(@Nonnull final String[] args) throws Exception {
         LOGGER.info("Starting application with arguments: %s", new Object[]{args});
@@ -32,7 +36,7 @@ public class App extends Application<SportChefConfiguration> {
     }
 
     public static <T extends Service> T getService(Class<T> serviceClass) {
-        return serviceClass.cast(services.get(serviceClass.hashCode()));
+        return serviceClass.cast(services.get(serviceClass.getName()));
     }
 
     @Override
@@ -50,18 +54,29 @@ public class App extends Application<SportChefConfiguration> {
 
     @Override
     public void run(@Nonnull final SportChefConfiguration configuration, @Nonnull final Environment environment) throws Exception {
-        final DBIFactory factory = new DBIFactory();
-        final DBI dbi = factory.build(environment, configuration.getDataSourceFactory(), "h2");
 
+        // Setup database configuration
+        final DBIFactory factory = new DBIFactory();
+        final DBI dbi = factory.build(environment, configuration.getDataSourceFactory(), "default");
+
+        // Migrate database if configured
+        if (configuration.getDataSourceFactory().isMigrateOnStart()) {
+            new LiquibaseUtil().migrate(configuration, environment);
+        }
+
+        // Prepare data access objects
         final UserDAO userDAO = dbi.onDemand(UserDAO.class);
 
         // Initialize services
-        services.put(UserService.class.hashCode(), new UserService(userDAO));
+        services.put(LicenseService.class.getName(), new LicenseService());
+        services.put(UserService.class.getName(), new UserService(userDAO));
 
         // Initialize health checks
+        environment.healthChecks().register("licenseService", new LicenseServiceHealthCheck());
         environment.healthChecks().register("userService", new UserServiceHealthCheck());
 
         // Initialize resources
+        environment.jersey().register(new LicenseResource());
         environment.jersey().register(new UserResource());
     }
 }
