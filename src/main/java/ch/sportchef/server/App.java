@@ -8,6 +8,7 @@ import ch.sportchef.server.resources.UserResource;
 import ch.sportchef.server.services.LicenseService;
 import ch.sportchef.server.services.Service;
 import ch.sportchef.server.services.UserService;
+import ch.sportchef.server.utils.LiquibaseUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import io.dropwizard.Application;
@@ -53,9 +54,17 @@ public class App extends Application<SportChefConfiguration> {
 
     @Override
     public void run(@Nonnull final SportChefConfiguration configuration, @Nonnull final Environment environment) throws Exception {
-        final DBIFactory factory = new DBIFactory();
-        final DBI dbi = factory.build(environment, configuration.getDataSourceFactory(), "h2");
 
+        // Setup database configuration
+        final DBIFactory factory = new DBIFactory();
+        final DBI dbi = factory.build(environment, configuration.getDataSourceFactory(), "default");
+
+        // Migrate database if configured
+        if (configuration.getDataSourceFactory().isMigrateOnStart()) {
+            new LiquibaseUtil().migrate(configuration, environment);
+        }
+
+        // Prepare data access objects
         final UserDAO userDAO = dbi.onDemand(UserDAO.class);
 
         // Initialize services

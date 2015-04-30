@@ -4,7 +4,6 @@ import ch.sportchef.server.App;
 import ch.sportchef.server.SportChefConfiguration;
 import ch.sportchef.server.representations.User;
 import ch.sportchef.server.services.UserService;
-import ch.sportchef.server.utils.LiquibaseUtil;
 import ch.sportchef.server.utils.UserGenerator;
 import io.dropwizard.testing.junit.DropwizardAppRule;
 import liquibase.exception.LiquibaseException;
@@ -28,7 +27,6 @@ public class UserServiceHealthCheckShould {
 
     @BeforeClass
     public static void setup() throws SQLException, LiquibaseException {
-        LiquibaseUtil.migrate(RULE);
         final UserService userService = App.getService(UserService.class);
         userService.storeUser(UserGenerator.getJohnDoe(0L));
     }
