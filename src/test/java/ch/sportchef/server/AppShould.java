@@ -50,7 +50,6 @@ public class AppShould {
 
     @Test
     public void runProperly() throws Exception {
-        final SportChefConfiguration configuration = mock(SportChefConfiguration.class);
         final HealthCheckRegistry healthCheckRegistry = mock(HealthCheckRegistry.class);
         final JerseyEnvironment jerseyEnvironment = mock(JerseyEnvironment.class);
         final UserDAO userDAO = mock(UserDAO.class);
@@ -61,6 +60,12 @@ public class AppShould {
         final DBIFactory dbiFactory = mock(DBIFactory.class);
         whenNew(DBIFactory.class).withNoArguments().thenReturn(dbiFactory);
         when(dbiFactory.build(any(Environment.class), any(DataSourceFactory.class), anyString())).thenReturn(dbi);
+
+        final SportChefDataSourceFactory dataSourceFactory = mock(SportChefDataSourceFactory.class);
+        when(dataSourceFactory.isMigrateOnStart()).thenReturn(false);
+
+        final SportChefConfiguration configuration = mock(SportChefConfiguration.class);
+        when(configuration.getDataSourceFactory()).thenReturn(dataSourceFactory);
 
         final Environment environment = mock (Environment.class);
         when(environment.healthChecks()).thenReturn(healthCheckRegistry);

@@ -2,7 +2,7 @@ package ch.sportchef.server.utils;
 
 import ch.sportchef.server.SportChefConfiguration;
 import io.dropwizard.db.ManagedDataSource;
-import io.dropwizard.testing.junit.DropwizardAppRule;
+import io.dropwizard.setup.Environment;
 import liquibase.Liquibase;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.LiquibaseException;
@@ -12,12 +12,13 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class LiquibaseUtil {
-    public static void migrate(final DropwizardAppRule<SportChefConfiguration> rule) throws LiquibaseException, SQLException {
-        final ManagedDataSource ds = rule.getConfiguration().getDataSourceFactory().build(
-                rule.getEnvironment().metrics(), "migrations");
+    public void migrate(final SportChefConfiguration configuration, final Environment environment) throws LiquibaseException, SQLException {
+        final ManagedDataSource ds = configuration.getDataSourceFactory().build(environment.metrics(), "migrations");
         final Connection connection = ds.getConnection();
         final Liquibase liquibase = new Liquibase("migrations.xml", new ClassLoaderResourceAccessor(), new JdbcConnection(connection));
-        liquibase.dropAll();
+        if (configuration.getDataSourceFactory().isDropAllBeforeMigration()) {
+            liquibase.dropAll();
+        }
         liquibase.update("");
     }
 }
