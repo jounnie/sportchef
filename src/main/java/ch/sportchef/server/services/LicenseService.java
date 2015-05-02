@@ -1,6 +1,7 @@
 package ch.sportchef.server.services;
 
 import ch.sportchef.server.representations.License;
+import com.google.common.base.Charsets;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,7 +11,9 @@ public class LicenseService implements Service {
 
     public License readLicense() {
         try {
-            final String text = new String(Files.readAllBytes(Paths.get("LICENSE.md")));
+            final String text = new String(
+                    Files.readAllBytes(Paths.get("LICENSE.md")),
+                    Charsets.UTF_8);
             final License license = new License(
                     "AGPL", "GNU AFFERO GENERAL PUBLIC LICENSE",
                     "3", "Version 3, 19 November 2007",
