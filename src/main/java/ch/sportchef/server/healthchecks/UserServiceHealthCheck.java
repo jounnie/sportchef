@@ -1,6 +1,7 @@
 package ch.sportchef.server.healthchecks;
 
 import ch.sportchef.server.App;
+import ch.sportchef.server.configuration.SportChefConfiguration;
 import ch.sportchef.server.representations.User;
 import ch.sportchef.server.services.UserService;
 import com.codahale.metrics.health.HealthCheck;
@@ -12,9 +13,10 @@ public class UserServiceHealthCheck extends HealthCheck {
     private final UserService userService;
     private final User referenceUser;
 
-    public UserServiceHealthCheck() {
+    public UserServiceHealthCheck(final SportChefConfiguration configuration) {
         this.userService = App.getService(UserService.class);
-        this.referenceUser = new User(1L, "John", "Doe", "+41 79 555 00 01", "john.doe@sportchef.ch");
+        this.referenceUser = configuration.getHealthCheckConfiguration()
+                .getUserServiceConfiguration().getReferenceUser();
     }
 
     @Override

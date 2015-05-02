@@ -1,7 +1,7 @@
 package ch.sportchef.server.resources;
 
 import ch.sportchef.server.App;
-import ch.sportchef.server.SportChefConfiguration;
+import ch.sportchef.server.configuration.SportChefConfiguration;
 import ch.sportchef.server.representations.User;
 import ch.sportchef.server.services.UserService;
 import ch.sportchef.server.utils.UserGenerator;

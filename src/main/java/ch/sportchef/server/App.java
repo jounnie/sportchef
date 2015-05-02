@@ -1,5 +1,7 @@
 package ch.sportchef.server;
 
+import ch.sportchef.server.bundles.SportChefMigrationsBundle;
+import ch.sportchef.server.configuration.SportChefConfiguration;
 import ch.sportchef.server.dao.UserDAO;
 import ch.sportchef.server.healthchecks.LicenseServiceHealthCheck;
 import ch.sportchef.server.healthchecks.UserServiceHealthCheck;
@@ -73,7 +75,7 @@ public class App extends Application<SportChefConfiguration> {
 
         // Initialize health checks
         environment.healthChecks().register("licenseService", new LicenseServiceHealthCheck());
-        environment.healthChecks().register("userService", new UserServiceHealthCheck());
+        environment.healthChecks().register("userService", new UserServiceHealthCheck(configuration));
 
         // Initialize resources
         environment.jersey().register(new LicenseResource());
