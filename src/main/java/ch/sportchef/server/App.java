@@ -1,5 +1,7 @@
 package ch.sportchef.server;
 
+import ch.sportchef.server.bundles.SportChefMigrationsBundle;
+import ch.sportchef.server.configuration.SportChefConfiguration;
 import ch.sportchef.server.dao.UserDAO;
 import ch.sportchef.server.healthchecks.LicenseServiceHealthCheck;
 import ch.sportchef.server.healthchecks.UserServiceHealthCheck;

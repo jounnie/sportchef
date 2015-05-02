@@ -1,5 +1,7 @@
 package ch.sportchef.server;
 
+import ch.sportchef.server.configuration.SportChefConfiguration;
+import ch.sportchef.server.configuration.SportChefDataSourceFactory;
 import ch.sportchef.server.dao.UserDAO;
 import ch.sportchef.server.services.LicenseService;
 import ch.sportchef.server.services.UserService;

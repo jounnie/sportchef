@@ -1,4 +1,4 @@
-package ch.sportchef.server;
+package ch.sportchef.server.configuration;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;

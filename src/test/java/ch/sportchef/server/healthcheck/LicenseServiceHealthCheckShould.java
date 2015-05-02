@@ -1,7 +1,7 @@
 package ch.sportchef.server.healthcheck;
 
 import ch.sportchef.server.App;
-import ch.sportchef.server.SportChefConfiguration;
+import ch.sportchef.server.configuration.SportChefConfiguration;
 import io.dropwizard.testing.junit.DropwizardAppRule;
 import org.junit.ClassRule;
 import org.junit.Test;
