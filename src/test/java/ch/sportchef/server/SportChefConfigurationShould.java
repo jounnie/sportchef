@@ -11,4 +11,14 @@ public class SportChefConfigurationShould {
     public void beInstancable() {
         assertThat(new SportChefConfiguration()).isNotNull();
     }
+
+    @Test
+    public void beValidForTesting() throws Exception {
+        App.main(new String[]{"check", "config-test.yaml"});
+    }
+
+    @Test
+    public void beValidForProduction() throws Exception {
+        App.main(new String[]{"check", "config.yaml"});
+    }
 }
