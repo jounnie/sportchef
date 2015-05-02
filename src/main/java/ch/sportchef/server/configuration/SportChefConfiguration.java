@@ -1,4 +1,4 @@
-package ch.sportchef.server;
+package ch.sportchef.server.configuration;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
@@ -13,7 +13,16 @@ public class SportChefConfiguration extends Configuration {
     @JsonProperty("database")
     private SportChefDataSourceFactory database = new SportChefDataSourceFactory();
 
+    @Valid
+    @NotNull
+    @JsonProperty("healthCheck")
+    private HealthCheckConfiguration healthCheck = new HealthCheckConfiguration();
+
     public SportChefDataSourceFactory getDataSourceFactory() {
         return database;
+    }
+
+    public HealthCheckConfiguration getHealthCheckConfiguration() {
+        return healthCheck;
     }
 }
