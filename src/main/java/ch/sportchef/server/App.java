@@ -75,7 +75,7 @@ public class App extends Application<SportChefConfiguration> {
 
         // Initialize health checks
         environment.healthChecks().register("licenseService", new LicenseServiceHealthCheck());
-        environment.healthChecks().register("userService", new UserServiceHealthCheck());
+        environment.healthChecks().register("userService", new UserServiceHealthCheck(configuration));
 
         // Initialize resources
         environment.jersey().register(new LicenseResource());

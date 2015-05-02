@@ -1,10 +1,13 @@
 package ch.sportchef.server;
 
+import ch.sportchef.server.configuration.HealthCheckConfiguration;
 import ch.sportchef.server.configuration.SportChefConfiguration;
 import ch.sportchef.server.configuration.SportChefDataSourceFactory;
+import ch.sportchef.server.configuration.UserServiceConfiguration;
 import ch.sportchef.server.dao.UserDAO;
 import ch.sportchef.server.services.LicenseService;
 import ch.sportchef.server.services.UserService;
+import ch.sportchef.server.utils.UserGenerator;
 import com.codahale.metrics.health.HealthCheck;
 import com.codahale.metrics.health.HealthCheckRegistry;
 import io.dropwizard.Bundle;
@@ -66,8 +69,15 @@ public class AppShould {
         final SportChefDataSourceFactory dataSourceFactory = mock(SportChefDataSourceFactory.class);
         when(dataSourceFactory.isMigrateOnStart()).thenReturn(false);
 
+        final UserServiceConfiguration userServiceConfiguration = mock(UserServiceConfiguration.class);
+        when(userServiceConfiguration.getReferenceUser()).thenReturn(UserGenerator.getJohnDoe(1L));
+
+        final HealthCheckConfiguration healthCheckConfiguration = mock(HealthCheckConfiguration.class);
+        when (healthCheckConfiguration.getUserServiceConfiguration()).thenReturn(userServiceConfiguration);
+
         final SportChefConfiguration configuration = mock(SportChefConfiguration.class);
         when(configuration.getDataSourceFactory()).thenReturn(dataSourceFactory);
+        when (configuration.getHealthCheckConfiguration()).thenReturn(healthCheckConfiguration);
 
         final Environment environment = mock (Environment.class);
         when(environment.healthChecks()).thenReturn(healthCheckRegistry);

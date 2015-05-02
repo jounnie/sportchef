@@ -13,7 +13,16 @@ public class SportChefConfiguration extends Configuration {
     @JsonProperty("database")
     private SportChefDataSourceFactory database = new SportChefDataSourceFactory();
 
+    @Valid
+    @NotNull
+    @JsonProperty("healthCheck")
+    private HealthCheckConfiguration healthCheck = new HealthCheckConfiguration();
+
     public SportChefDataSourceFactory getDataSourceFactory() {
         return database;
+    }
+
+    public HealthCheckConfiguration getHealthCheckConfiguration() {
+        return healthCheck;
     }
 }
