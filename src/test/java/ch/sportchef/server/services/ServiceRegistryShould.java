@@ -25,23 +25,23 @@ public class ServiceRegistryShould {
     }
 
     @Test(expected = NullPointerException.class)
-    public void registerShouldFail () {
+    public void registerShouldFail() {
         ServiceRegistry.register(null);
     }
 
     @Test(expected = ServiceNotFoundException.class)
-    public void getServiceShouldFail () throws Exception {
+    public void getServiceShouldFail() throws Exception {
         ServiceRegistry.getService(TestService.class);
     }
 
     @Test
-    public void registerAndGetService () throws Exception {
+    public void registerAndGetService() throws Exception {
         // create a new TestService and register
-        TestService serviceToRegister = new TestService();
+        final TestService serviceToRegister = new TestService();
         ServiceRegistry.register(serviceToRegister);
 
         // get TestService from registry and check
-        TestService registeredService = ServiceRegistry.getService(TestService.class);
+        final TestService registeredService = ServiceRegistry.getService(TestService.class);
         Assert.assertSame(serviceToRegister, registeredService);
     }
 }
