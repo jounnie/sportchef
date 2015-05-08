@@ -1,14 +1,11 @@
 package ch.sportchef.server.services;
 
+import ch.sportchef.server.utils.UtilityClassVerifier;
 import org.junit.Assert;
 import org.junit.Test;
 
 import javax.management.ServiceNotFoundException;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Modifier;
-
-import static org.junit.Assert.assertTrue;
 
 public class ServiceRegistryShould {
 
@@ -17,11 +14,8 @@ public class ServiceRegistryShould {
     }
 
     @Test
-    public void notBeInstantiable() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        final Constructor<ServiceRegistry> constructor = ServiceRegistry.class.getDeclaredConstructor();
-        assertTrue(Modifier.isPrivate(constructor.getModifiers()));
-        constructor.setAccessible(true);
-        constructor.newInstance();
+    public void beWellDefined() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        UtilityClassVerifier.assertUtilityClassWellDefined(ServiceRegistry.class);
     }
 
     @Test(expected = NullPointerException.class)
