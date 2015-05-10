@@ -3,7 +3,7 @@ package ch.sportchef.server.services;
 import ch.sportchef.server.dao.UserDAO;
 import ch.sportchef.server.representations.User;
 
-import java.util.Optional;
+import javax.ws.rs.NotFoundException;
 
 public class UserService implements Service {
 
@@ -13,8 +13,13 @@ public class UserService implements Service {
         this.userDAO = userDAO;
     }
 
-    public Optional<User> readUserById(final long userId) {
-        return Optional.ofNullable(userDAO.readById(userId));
+    public User readUserById(final long userId) {
+        final User user = userDAO.readById(userId);
+        if (user == null) {
+            throw new NotFoundException(
+                    String.format("user with id '%d'", userId));
+        }
+        return user;
     }
 
     public User storeUser(final User user) {

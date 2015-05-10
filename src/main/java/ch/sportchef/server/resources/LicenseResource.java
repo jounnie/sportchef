@@ -24,9 +24,6 @@ public class LicenseResource {
     @Timed
     public Response readLicense() throws IOException {
         final License license = licenseService.readLicense();
-        if (license == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
         return Response.ok(license).build();
     }
 

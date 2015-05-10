@@ -15,7 +15,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Optional;
 
 @Path("/user")
 public class UserResource {
@@ -30,11 +29,8 @@ public class UserResource {
     @Path("/{userId}")
     @Timed
     public Response readUser(@PathParam("userId") final long userId) {
-        final Optional<User> optionalUser = userService.readUserById(userId);
-        if (!optionalUser.isPresent()) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-        return Response.ok(optionalUser.get()).build();
+        final User user = userService.readUserById(userId);
+        return Response.ok(user).build();
     }
 
     @POST
