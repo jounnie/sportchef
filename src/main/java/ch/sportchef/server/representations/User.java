@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 
 public class User {
 
-    private final long id;
+    private final long userId;
 
     @NotBlank
     @Length(min=1, max=100)
@@ -36,9 +36,9 @@ public class User {
         this(0, null, null, null, null);
     }
 
-    public User(final long id, @Nonnull final String firstName, @Nonnull final String lastName, @Nonnull final String phone, @Nonnull final String email) {
+    public User(final long userId, @Nonnull final String firstName, @Nonnull final String lastName, @Nonnull final String phone, @Nonnull final String email) {
         super();
-        this.id = id;
+        this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
@@ -60,8 +60,8 @@ public class User {
         return ToStringBuilder.reflectionToString(this);
     }
 
-    public long getId() {
-        return id;
+    public long getUserId() {
+        return userId;
     }
 
     public @Nullable

@@ -13,15 +13,15 @@ import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 public interface UserDAO {
 
     @GetGeneratedKeys
-    @SqlUpdate("INSERT INTO user (id, firstName, lastName, phone, email) VALUES (NULL, :firstName, :lastName, :phone, :email)")
+    @SqlUpdate("INSERT INTO user (userId, firstName, lastName, phone, email) VALUES (NULL, :firstName, :lastName, :phone, :email)")
     long create(@BindBean User user);
 
-    @SqlQuery("SELECT * FROM user WHERE id = :id")
-    User readById(@Bind("id") final long id);
+    @SqlQuery("SELECT * FROM user WHERE userId = :userId")
+    User readById(@Bind("userId") final long userId);
 
-    @SqlUpdate("UPDATE user SET firstName = :firstName, lastName = :lastName, phone = :phone, email = :email WHERE id = :id")
+    @SqlUpdate("UPDATE user SET firstName = :firstName, lastName = :lastName, phone = :phone, email = :email WHERE userId = :userId")
     void update(@BindBean User user);
 
-    @SqlUpdate("DELETE FROM user WHERE id = :id")
+    @SqlUpdate("DELETE FROM user WHERE userId = :userId")
     void delete(@BindBean User user);
 }

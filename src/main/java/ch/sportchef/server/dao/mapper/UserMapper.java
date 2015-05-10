@@ -12,7 +12,7 @@ public class UserMapper implements ResultSetMapper<User> {
     @Override
     public User map(final int index, final ResultSet r, final StatementContext ctx) throws SQLException {
         return new User(
-                r.getLong("id"),
+                r.getLong("userId"),
                 r.getString("firstName"),
                 r.getString("lastName"),
                 r.getString("phone"),
