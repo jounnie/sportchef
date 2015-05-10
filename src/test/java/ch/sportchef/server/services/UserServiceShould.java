@@ -7,7 +7,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Optional;
+import javax.ws.rs.NotFoundException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -40,22 +40,19 @@ public class UserServiceShould {
 
     @Test
     public void returnJohnDoe() {
-        final Optional<User> optionalUser = userService.readUserById(1L);
-        assertThat(optionalUser.isPresent()).isTrue();
-        assertThat(optionalUser.get()).isEqualTo(UserGenerator.getJohnDoe(1L));
+        final User user = userService.readUserById(1L);
+        assertThat(user).isEqualTo(UserGenerator.getJohnDoe(1L));
     }
 
     @Test
     public void returnJaneDoe() {
-        final Optional<User> optionalUser = userService.readUserById(2L);
-        assertThat(optionalUser.isPresent()).isTrue();
-        assertThat(optionalUser.get()).isEqualTo(UserGenerator.getJaneDoe(2L));
+        final User user = userService.readUserById(2L);
+        assertThat(user).isEqualTo(UserGenerator.getJaneDoe(2L));
     }
 
-    @Test
+    @Test(expected = NotFoundException.class)
     public void returnNoUser() {
-        final Optional<User> optionalUser = userService.readUserById(3L);
-        assertThat(optionalUser.isPresent()).isFalse();
+        userService.readUserById(3L);
     }
 
     @Test
@@ -76,6 +73,5 @@ public class UserServiceShould {
     public void removeNonExistingUser() {
         final User nonExistingUser = UserGenerator.getJimDoe(3L);
         userService.removeUser(nonExistingUser);
-        assertThat(userService.readUserById(3L).isPresent()).isFalse();
     }
 }
