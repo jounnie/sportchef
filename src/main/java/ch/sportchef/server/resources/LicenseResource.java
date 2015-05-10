@@ -11,7 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
 
-@Path("/license")
+@Path("license")
 public class LicenseResource {
 
     private final LicenseService licenseService;

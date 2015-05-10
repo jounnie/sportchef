@@ -9,12 +9,17 @@ import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 
+import java.util.List;
+
 @RegisterMapper(UserMapper.class)
 public interface UserDAO {
 
     @GetGeneratedKeys
     @SqlUpdate("INSERT INTO user (userId, firstName, lastName, phone, email) VALUES (NULL, :firstName, :lastName, :phone, :email)")
     long create(@BindBean User user);
+
+    @SqlQuery("SELECT * FROM user ORDER BY userId")
+    List<User> readAllUsers();
 
     @SqlQuery("SELECT * FROM user WHERE userId = :userId")
     User readById(@Bind("userId") final long userId);

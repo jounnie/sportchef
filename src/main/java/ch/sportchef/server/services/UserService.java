@@ -4,6 +4,7 @@ import ch.sportchef.server.dao.UserDAO;
 import ch.sportchef.server.representations.User;
 
 import javax.ws.rs.NotFoundException;
+import java.util.List;
 
 public class UserService implements Service {
 
@@ -11,6 +12,10 @@ public class UserService implements Service {
 
     public UserService(final UserDAO userDAO) {
         this.userDAO = userDAO;
+    }
+
+    public List<User> readAllUsers() {
+        return userDAO.readAllUsers();
     }
 
     public User readUserById(final long userId) {
