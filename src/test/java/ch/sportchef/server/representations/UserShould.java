@@ -23,7 +23,7 @@ public class UserShould {
     public void deserializeFromJSON() throws IOException {
         final User user = MAPPER.readValue(fixture("fixtures/user.json"), User.class);
         assertThat(user).isNotNull();
-        assertThat(user.getId()).isEqualTo(1L);
+        assertThat(user.getUserId()).isEqualTo(1L);
         assertThat(user.getFirstName()).isEqualTo("John");
         assertThat(user.getLastName()).isEqualTo("Doe");
         assertThat(user.getPhone()).isEqualTo("+41 79 123 45 67");
@@ -35,7 +35,7 @@ public class UserShould {
         final User user = new User(1L, "John", "Doe", "+41 79 123 45 67", "john.doe@sportchef.ch");
         final String toString = user.toString();
         assertThat(toString).contains("ch.sportchef.server.representations.User");
-        assertThat(toString).contains("id=1");
+        assertThat(toString).contains("userId=1");
         assertThat(toString).contains("firstName=John");
         assertThat(toString).contains("lastName=Doe");
         assertThat(toString).contains("phone=+41 79 123 45 67");

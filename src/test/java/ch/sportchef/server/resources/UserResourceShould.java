@@ -111,7 +111,7 @@ public class UserResourceShould {
     @Test
     public void updateJoyDoe() {
         final WebTarget target = ClientBuilder.newClient().target(
-                String.format("http://localhost:%d/api/user/%d", RULE.getLocalPort(), joyDoe.getId()));
+                String.format("http://localhost:%d/api/user/%d", RULE.getLocalPort(), joyDoe.getUserId()));
 
         final Response response = target
                 .request(MediaType.APPLICATION_JSON_TYPE)
@@ -124,7 +124,7 @@ public class UserResourceShould {
     @Test
     public void notUpdateJoyDoe() {
         final WebTarget target = ClientBuilder.newClient().target(
-                String.format("http://localhost:%d/api/user/%d", RULE.getLocalPort(), janeDoe.getId()));
+                String.format("http://localhost:%d/api/user/%d", RULE.getLocalPort(), janeDoe.getUserId()));
 
         final Response response = target
                 .request(MediaType.APPLICATION_JSON_TYPE)
