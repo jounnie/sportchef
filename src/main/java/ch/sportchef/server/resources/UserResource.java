@@ -27,10 +27,10 @@ public class UserResource {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/{userId}")
     @Timed
-    public Response readUser(@PathParam("id") final long id) {
-        final Optional<User> optionalUser = userService.readUserById(id);
+    public Response readUser(@PathParam("userId") final long userId) {
+        final Optional<User> optionalUser = userService.readUserById(userId);
         if (!optionalUser.isPresent()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -41,17 +41,17 @@ public class UserResource {
     @Timed
     public Response createUser(@Valid User user) throws URISyntaxException {
         final User newUser = userService.storeUser(user);
-        return Response.created(new URI(String.valueOf(newUser.getId()))).build();
+        return Response.created(new URI(String.valueOf(newUser.getUserId()))).build();
     }
 
     @PUT
     @Path("/{id}")
     @Timed
     public Response updateUser(@PathParam("id") final long id, @Valid User user) throws URISyntaxException {
-        if (id != user.getId()) {
+        if (id != user.getUserId()) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
         final User updateUser = userService.storeUser(user);
-        return Response.ok(new URI(String.valueOf(updateUser.getId()))).build();
+        return Response.ok(new URI(String.valueOf(updateUser.getUserId()))).build();
     }
 }

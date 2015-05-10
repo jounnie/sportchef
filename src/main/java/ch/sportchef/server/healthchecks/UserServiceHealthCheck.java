@@ -22,7 +22,7 @@ public class UserServiceHealthCheck extends HealthCheck {
 
     @Override
     protected Result check() throws Exception {
-        final long userId = referenceUser.getId();
+        final long userId = referenceUser.getUserId();
         final Optional<User> checkUser = userService.readUserById(userId);
 
         if (checkUser.isPresent() && checkUser.get().equals(referenceUser)) {
