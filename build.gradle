@@ -10,6 +10,8 @@ targetCompatibility = 1.8
 
 version = '0.1'
 
+mainClassName = 'ch.sportchef.server.App'
+
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 idea {
