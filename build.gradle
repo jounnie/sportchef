@@ -8,8 +8,9 @@ apply plugin: 'com.github.kt3k.coveralls'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-// Year and month
-version = '15.04'
+version = '0.1'
+
+mainClassName = 'ch.sportchef.server.App'
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
