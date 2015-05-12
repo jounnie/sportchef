@@ -19,4 +19,8 @@ public class UserGenerator {
     public static User getJoyDoe(final long id) {
         return new User(id, "Joy", "Doe", "+41 79 555 00 04", "joy.doe@sportchef.ch");
     }
+
+    public static User getJackDoe(final long id) {
+        return new User(id, "Jack", "Doe", "+41 79 555 00 05", "jack.doe@sportchef.ch");
+    }
 }

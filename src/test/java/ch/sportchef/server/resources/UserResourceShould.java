@@ -154,4 +154,19 @@ public class UserResourceShould {
 
         assertThat(response.getStatus()).isEqualTo(Response.Status.BAD_REQUEST.getStatusCode());
     }
+
+    @Test
+    public void notCreateOnUpdate() {
+        final User jackDoe = UserGenerator.getJackDoe(42);
+
+        final WebTarget target = ClientBuilder.newClient().target(
+                String.format("http://localhost:%d/api/users/%d", RULE.getLocalPort(), jackDoe.getUserId()));
+
+        final Response response = target
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .put(Entity.json(jackDoe));
+
+        assertThat(response.getStatus()).isEqualTo(Response.Status.BAD_REQUEST.getStatusCode());
+    }
 }
