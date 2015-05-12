@@ -156,7 +156,7 @@ public class UserResourceShould {
     }
 
     @Test
-    public void notCreateOnUpdate() {
+    public void notCreateOnUpdateNonExistingUser() {
         final User jackDoe = UserGenerator.getJackDoe(42);
 
         final WebTarget target = ClientBuilder.newClient().target(
@@ -167,6 +167,6 @@ public class UserResourceShould {
                 .accept(MediaType.APPLICATION_JSON_TYPE)
                 .put(Entity.json(jackDoe));
 
-        assertThat(response.getStatus()).isEqualTo(Response.Status.BAD_REQUEST.getStatusCode());
+        assertThat(response.getStatus()).isEqualTo(Response.Status.NOT_FOUND.getStatusCode());
     }
 }

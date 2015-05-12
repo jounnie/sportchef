@@ -33,6 +33,9 @@ public class UserService implements Service {
             return new User(newUserId, user.getFirstName(), user.getLastName(), user.getPhone(), user.getEmail());
         }
 
+        // check to see if the user exists, throws a NotFoundException
+        readUserById(user.getUserId());
+
         userDAO.update(user);
         return user;
     }
