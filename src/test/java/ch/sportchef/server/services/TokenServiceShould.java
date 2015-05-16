@@ -1,8 +1,8 @@
-package ch.sportchef.server.utils;
+package ch.sportchef.server.services;
 
 import ch.sportchef.server.representations.User;
-import ch.sportchef.server.services.ServiceRegistry;
-import ch.sportchef.server.services.UserService;
+import ch.sportchef.server.utils.SportChefAuthenticator;
+import ch.sportchef.server.utils.UserGenerator;
 import com.github.toastshaman.dropwizard.auth.jwt.JsonWebTokenValidator;
 import com.github.toastshaman.dropwizard.auth.jwt.model.JsonWebToken;
 import com.github.toastshaman.dropwizard.auth.jwt.model.JsonWebTokenClaim;
@@ -32,9 +32,9 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(ServiceRegistry.class)
 @PowerMockIgnore({"javax.crypto.*" })
-public class SportChefAuthenticatorShould {
+public class TokenServiceShould {
 
-    private static final byte[] TOKEN_SECRET =
+    private final byte[] tokenSecret =
             UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8);
 
     private JsonWebToken expiredToken;
@@ -69,33 +69,33 @@ public class SportChefAuthenticatorShould {
     public void generateNewToken() throws ServiceNotFoundException, AuthenticationException {
         final User johnDoe = UserGenerator.getJohnDoe(1L);
         final JsonWebTokenValidator jsonWebTokenValidator = mock(JsonWebTokenValidator.class);
-        final SportChefAuthenticator authenticator = new SportChefAuthenticator(jsonWebTokenValidator, TOKEN_SECRET);
-        final Map<String, String> newTokenMap = authenticator.generateNewToken(johnDoe);
+        final TokenService tokenService = new TokenService(tokenSecret);
+        final Map<String, String> tokenMap = tokenService.generateToken(johnDoe);
 
-        assertThat(newTokenMap).isNotNull();
-        assertThat(newTokenMap.size()).isEqualTo(1);
-        assertThat(newTokenMap.containsKey("token")).isTrue();
-        assertThat(newTokenMap.get("token")).isNotNull();
+        assertThat(tokenMap).isNotNull();
+        assertThat(tokenMap.size()).isEqualTo(1);
+        assertThat(tokenMap.containsKey("token")).isTrue();
+        assertThat(tokenMap.get("token")).isNotNull();
     }
 
     @Test(expected = AuthenticationException.class)
     public void rejectGenerateNewTokenForInvalidUser() throws ServiceNotFoundException, AuthenticationException {
         final User johnDoe = UserGenerator.getJohnDoe(2L);
         final JsonWebTokenValidator jsonWebTokenValidator = mock(JsonWebTokenValidator.class);
-        final SportChefAuthenticator authenticator = new SportChefAuthenticator(jsonWebTokenValidator, TOKEN_SECRET);
-        final Map<String, String> newTokenMap = authenticator.generateNewToken(johnDoe);
+        final TokenService tokenService = new TokenService(tokenSecret);
+        final Map<String, String> tokenMap = tokenService.generateToken(johnDoe);
 
-        assertThat(newTokenMap).isNotNull();
-        assertThat(newTokenMap.size()).isEqualTo(1);
-        assertThat(newTokenMap.containsKey("token")).isTrue();
-        assertThat(newTokenMap.get("token")).isNotNull();
+        assertThat(tokenMap).isNotNull();
+        assertThat(tokenMap.size()).isEqualTo(1);
+        assertThat(tokenMap.containsKey("token")).isTrue();
+        assertThat(tokenMap.get("token")).isNotNull();
     }
 
     @Test
     public void authenticateSuccessful() throws ServiceNotFoundException, AuthenticationException {
         final User johnDoe = UserGenerator.getJohnDoe(1L);
         final JsonWebTokenValidator expiryValidator = new ExpiryValidator();
-        final SportChefAuthenticator authenticator = new SportChefAuthenticator(expiryValidator, TOKEN_SECRET);
+        final SportChefAuthenticator authenticator = new SportChefAuthenticator(expiryValidator, tokenSecret);
         final Optional<User> optUser = authenticator.authenticate(validToken);
 
         assertThat(optUser).isNotNull();
@@ -106,7 +106,7 @@ public class SportChefAuthenticatorShould {
     @Test(expected = AuthenticationException.class)
     public void rejectExpiredToken() throws ServiceNotFoundException, AuthenticationException {
         final JsonWebTokenValidator expiryValidator = new ExpiryValidator();
-        final SportChefAuthenticator authenticator = new SportChefAuthenticator(expiryValidator, TOKEN_SECRET);
+        final SportChefAuthenticator authenticator = new SportChefAuthenticator(expiryValidator, tokenSecret);
         final Optional<User> optUser = authenticator.authenticate(expiredToken);
     }
 }
