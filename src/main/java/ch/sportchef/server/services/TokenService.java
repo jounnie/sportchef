@@ -7,6 +7,7 @@ import com.github.toastshaman.dropwizard.auth.jwt.model.JsonWebToken;
 import com.github.toastshaman.dropwizard.auth.jwt.model.JsonWebTokenClaim;
 import com.github.toastshaman.dropwizard.auth.jwt.model.JsonWebTokenHeader;
 import io.dropwizard.auth.AuthenticationException;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.joda.time.DateTime;
 
 import javax.management.ServiceNotFoundException;
@@ -52,7 +53,8 @@ public class TokenService implements Service {
     }
 
     private void checkUserPasswordMatches(final Login login, final User user) throws AuthenticationException {
-        if (!login.getPassword().equals(user.getPassword())) {
+        final String sha512Password = DigestUtils.sha512Hex(login.getPassword());
+        if (!sha512Password.equals(user.getPassword())) {
             throwAuthenticationException();
         }
     }

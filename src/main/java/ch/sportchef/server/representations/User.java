@@ -33,7 +33,7 @@ public class User {
     private final String email;
 
     @Nullable
-    @Length(min=10, max=100)
+    @Length(min=10, max=255)
     @JsonIgnore // passwords should never leak to JSON output
     private final String password;
 

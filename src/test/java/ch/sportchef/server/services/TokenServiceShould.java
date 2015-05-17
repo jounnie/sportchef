@@ -11,6 +11,7 @@ import com.github.toastshaman.dropwizard.auth.jwt.model.JsonWebTokenHeader;
 import com.github.toastshaman.dropwizard.auth.jwt.validator.ExpiryValidator;
 import com.google.common.base.Optional;
 import io.dropwizard.auth.AuthenticationException;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
@@ -58,7 +59,9 @@ public class TokenServiceShould {
                         .expiration(DateTime.now().plusDays(1)).build())
                 .build();
 
-        final User johnDoe = UserGenerator.getJohnDoe(1L);
+        final User tmpUser = UserGenerator.getJohnDoe(1L);
+        final User johnDoe = new User(tmpUser.getUserId(), tmpUser.getFirstName(), tmpUser.getLastName(),
+                tmpUser.getPhone(), tmpUser.getEmail(), DigestUtils.sha512Hex(tmpUser.getPassword()));
 
         final UserService userService = mock(UserService.class);
         when(userService.readUserById(1L)).thenReturn(johnDoe);

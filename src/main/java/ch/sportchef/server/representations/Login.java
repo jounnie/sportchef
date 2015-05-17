@@ -10,7 +10,7 @@ public class Login {
     private final long userId;
 
     @NotEmpty
-    @Length(min=10, max=100)
+    @Length(min=10, max=255)
     private final String password;
 
     private Login() {
