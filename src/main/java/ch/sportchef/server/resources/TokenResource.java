@@ -1,5 +1,6 @@
 package ch.sportchef.server.resources;
 
+import ch.sportchef.server.representations.Login;
 import ch.sportchef.server.representations.User;
 import ch.sportchef.server.services.ServiceRegistry;
 import ch.sportchef.server.services.TokenService;
@@ -7,7 +8,9 @@ import io.dropwizard.auth.Auth;
 import io.dropwizard.auth.AuthenticationException;
 
 import javax.management.ServiceNotFoundException;
+import javax.validation.Valid;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 import java.util.Map;
@@ -22,15 +25,16 @@ public class TokenResource {
         this.tokenService = ServiceRegistry.getService(TokenService.class);
     }
 
-    @GET
+    @POST
     @Path("generate")
-    public Map<String, String> generate(final User user) throws AuthenticationException {
-        return tokenService.generateToken(user);
+    public Response generate(final Login login) throws AuthenticationException {
+        final Map<String, String> token = tokenService.generateToken(login);
+        return Response.status(Response.Status.CREATED).entity(token).build();
     }
 
     @GET
     @Path("/check")
-    public Response user(@Auth final User user) {
+    public Response user(@Auth @Valid final User user) {
         return Response.ok().build();
     }
 }

@@ -1,5 +1,6 @@
 package ch.sportchef.server.services;
 
+import ch.sportchef.server.representations.Login;
 import ch.sportchef.server.representations.User;
 import com.github.toastshaman.dropwizard.auth.jwt.hmac.HmacSHA512Signer;
 import com.github.toastshaman.dropwizard.auth.jwt.model.JsonWebToken;
@@ -9,9 +10,11 @@ import io.dropwizard.auth.AuthenticationException;
 import org.joda.time.DateTime;
 
 import javax.management.ServiceNotFoundException;
+import javax.ws.rs.NotFoundException;
 import java.util.Map;
 
 import static java.util.Collections.singletonMap;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 public class TokenService implements Service {
 
@@ -24,11 +27,41 @@ public class TokenService implements Service {
         this.userService = ServiceRegistry.getService(UserService.class);
     }
 
-    public Map<String, String> generateToken(final User user) throws AuthenticationException {
-        if (!user.equals(userService.readUserById(user.getUserId()))) {
-            throw new AuthenticationException(
-                    String.format("Invalid user '%s'", user));
+    private User getUser(final Login login) {
+        try {
+            return userService.readUserById(login.getUserId());
+        } catch (final NotFoundException e) {
+            return null;
         }
+    }
+
+    private void throwAuthenticationException() throws AuthenticationException {
+        throw new AuthenticationException("Invalid username and/or password!");
+    }
+
+    private void checkUserIsNotNull(final Login login, final User user) throws AuthenticationException {
+        if (login == null || user == null) {
+            throwAuthenticationException();
+        }
+    }
+
+    private void checkUserPasswordIsNotNull(final Login login, final User user) throws AuthenticationException {
+        if (isEmpty(login.getPassword()) || isEmpty(user.getPassword())) {
+            throwAuthenticationException();
+        }
+    }
+
+    private void checkUserPasswordMatches(final Login login, final User user) throws AuthenticationException {
+        if (!login.getPassword().equals(user.getPassword())) {
+            throwAuthenticationException();
+        }
+    }
+
+    public Map<String, String> generateToken(final Login login) throws AuthenticationException {
+        final User user = getUser(login);
+        checkUserIsNotNull(login, user);
+        checkUserPasswordIsNotNull(login, user);
+        checkUserPasswordMatches(login, user);
 
         final DateTime now = DateTime.now();
         final HmacSHA512Signer signer = new HmacSHA512Signer(tokenSecret);

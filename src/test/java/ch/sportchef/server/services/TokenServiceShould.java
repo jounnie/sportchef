@@ -1,5 +1,6 @@
 package ch.sportchef.server.services;
 
+import ch.sportchef.server.representations.Login;
 import ch.sportchef.server.representations.User;
 import ch.sportchef.server.utils.SportChefAuthenticator;
 import ch.sportchef.server.utils.UserGenerator;
@@ -67,40 +68,54 @@ public class TokenServiceShould {
 
     @Test
     public void generateNewToken() throws ServiceNotFoundException, AuthenticationException {
-        final User johnDoe = UserGenerator.getJohnDoe(1L);
+        final User user = UserGenerator.getJohnDoe(1L);
+        final Login login = new Login(user.getUserId(), user.getPassword());
         final JsonWebTokenValidator jsonWebTokenValidator = mock(JsonWebTokenValidator.class);
         final TokenService tokenService = new TokenService(tokenSecret);
-        final Map<String, String> tokenMap = tokenService.generateToken(johnDoe);
+        final Map<String, String> tokenMap = tokenService.generateToken(login);
 
         assertThat(tokenMap).isNotNull();
         assertThat(tokenMap.size()).isEqualTo(1);
         assertThat(tokenMap.containsKey("token")).isTrue();
-        assertThat(tokenMap.get("token")).isNotNull();
+        assertThat(tokenMap.get("token")).isNotEmpty();
     }
 
     @Test(expected = AuthenticationException.class)
     public void rejectGenerateNewTokenForInvalidUser() throws ServiceNotFoundException, AuthenticationException {
-        final User johnDoe = UserGenerator.getJohnDoe(2L);
+        final User user = UserGenerator.getJohnDoe(2L);
+        final Login login = new Login(user.getUserId(), user.getPassword());
         final JsonWebTokenValidator jsonWebTokenValidator = mock(JsonWebTokenValidator.class);
         final TokenService tokenService = new TokenService(tokenSecret);
-        final Map<String, String> tokenMap = tokenService.generateToken(johnDoe);
+        final Map<String, String> tokenMap = tokenService.generateToken(login);
+    }
 
-        assertThat(tokenMap).isNotNull();
-        assertThat(tokenMap.size()).isEqualTo(1);
-        assertThat(tokenMap.containsKey("token")).isTrue();
-        assertThat(tokenMap.get("token")).isNotNull();
+    @Test(expected = AuthenticationException.class)
+    public void rejectGenerateNewTokenForUserWithoutPassword() throws ServiceNotFoundException, AuthenticationException {
+        final User user = UserGenerator.getJaneDoe(1L);
+        final Login login = new Login(user.getUserId(), user.getPassword());
+        final JsonWebTokenValidator jsonWebTokenValidator = mock(JsonWebTokenValidator.class);
+        final TokenService tokenService = new TokenService(tokenSecret);
+        final Map<String, String> tokenMap = tokenService.generateToken(login);
+    }
+
+    @Test(expected = AuthenticationException.class)
+    public void rejectGenerateNewTokenForLoginWithoutPassword() throws ServiceNotFoundException, AuthenticationException {
+        final Login login = new Login(1L, null);
+        final JsonWebTokenValidator jsonWebTokenValidator = mock(JsonWebTokenValidator.class);
+        final TokenService tokenService = new TokenService(tokenSecret);
+        final Map<String, String> tokenMap = tokenService.generateToken(login);
     }
 
     @Test
     public void authenticateSuccessful() throws ServiceNotFoundException, AuthenticationException {
-        final User johnDoe = UserGenerator.getJohnDoe(1L);
+        final User user = UserGenerator.getJohnDoe(1L);
         final JsonWebTokenValidator expiryValidator = new ExpiryValidator();
         final SportChefAuthenticator authenticator = new SportChefAuthenticator(expiryValidator, tokenSecret);
         final Optional<User> optUser = authenticator.authenticate(validToken);
 
         assertThat(optUser).isNotNull();
         assertThat(optUser.isPresent()).isTrue();
-        assertThat(optUser.get()).isEqualTo(johnDoe);
+        assertThat(optUser.get()).isEqualTo(user);
     }
 
     @Test(expected = AuthenticationException.class)

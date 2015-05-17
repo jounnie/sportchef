@@ -37,7 +37,7 @@ public class SportChefAuthenticator implements Authenticator<JsonWebToken, User>
         try {
             jsonWebTokenValidator.validate(token);
         } catch (final TokenExpiredException e) {
-            throw new AuthenticationException(e);
+            throw new AuthenticationException("Token has expired!", e);
         }
     }
 }
