@@ -5,6 +5,7 @@ import ch.sportchef.server.configuration.SportChefConfiguration;
 import ch.sportchef.server.dao.UserDAO;
 import ch.sportchef.server.healthchecks.LicenseServiceHealthCheck;
 import ch.sportchef.server.healthchecks.UserServiceHealthCheck;
+import ch.sportchef.server.provider.AuthenticationExceptionMapper;
 import ch.sportchef.server.representations.User;
 import ch.sportchef.server.resources.LicenseResource;
 import ch.sportchef.server.resources.TokenResource;
@@ -87,6 +88,9 @@ public class App extends Application<SportChefConfiguration> {
         environment.jersey().register(new LicenseResource());
         environment.jersey().register(new TokenResource());
         environment.jersey().register(new UserResource());
+
+        // Register custom exception mappers
+        environment.jersey().register(new AuthenticationExceptionMapper());
 
         // Configure JSON Web Token Authentication
         final JsonWebTokenParser tokenParser = new DefaultJsonWebTokenParser();
