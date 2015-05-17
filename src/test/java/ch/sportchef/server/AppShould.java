@@ -101,6 +101,6 @@ public class AppShould {
         assertThat(ServiceRegistry.getService(UserService.class)).isNotNull();
 
         verify(healthCheckRegistry, times(2)).register(anyString(), any(HealthCheck.class));
-        verify(jerseyEnvironment, times(4)).register(any(Object.class));
+        verify(jerseyEnvironment, times(5)).register(any(Object.class));
     }
 }
