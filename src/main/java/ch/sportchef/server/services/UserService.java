@@ -30,7 +30,8 @@ public class UserService implements Service {
     public User storeUser(final User user) {
         if (user.getUserId() == 0) {
             final long newUserId = userDAO.create(user);
-            return new User(newUserId, user.getFirstName(), user.getLastName(), user.getPhone(), user.getEmail());
+            return new User(newUserId, user.getFirstName(), user.getLastName(),
+                    user.getPhone(), user.getEmail(), user.getPassword());
         }
 
         // check to see if the user exists, throws a NotFoundException

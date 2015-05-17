@@ -1,8 +1,9 @@
 package ch.sportchef.server.representations;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -31,23 +32,30 @@ public class User {
     @Length(min=1, max=100)
     private final String email;
 
+    @Nullable
+    @Length(min=10, max=100)
+    @JsonIgnore // passwords should never leak to JSON output
+    private final String password;
+
     private User() {
         // Jackson deserialization
-        this(0, null, null, null, null);
+        this(0, null, null, null, null, null);
     }
 
-    public User(final long userId, @Nonnull final String firstName, @Nonnull final String lastName, @Nonnull final String phone, @Nonnull final String email) {
+    public User(final long userId, @Nonnull final String firstName, @Nonnull final String lastName,
+                @Nonnull final String phone, @Nonnull final String email, @Nonnull final String password) {
         super();
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.email = email;
+        this.password = password;
     }
 
     @Override
     public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
+        return EqualsBuilder.reflectionEquals(this, obj, "password");
     }
 
     @Override
@@ -57,7 +65,9 @@ public class User {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        final ReflectionToStringBuilder reflectionToStringBuilder = new ReflectionToStringBuilder(this);
+        reflectionToStringBuilder.setExcludeFieldNames(new String[] {"password"});
+        return reflectionToStringBuilder.toString();
     }
 
     public long getUserId() {
@@ -79,5 +89,9 @@ public class User {
 
     public @Nullable String getEmail() {
         return email;
+    }
+
+    public @Nullable String getPassword() {
+        return password;
     }
 }

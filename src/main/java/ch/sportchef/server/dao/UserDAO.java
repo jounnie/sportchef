@@ -15,7 +15,7 @@ import java.util.List;
 public interface UserDAO {
 
     @GetGeneratedKeys
-    @SqlUpdate("INSERT INTO user (userId, firstName, lastName, phone, email) VALUES (NULL, :firstName, :lastName, :phone, :email)")
+    @SqlUpdate("INSERT INTO user (userId, firstName, lastName, phone, email, password) VALUES (NULL, :firstName, :lastName, :phone, :email, :password)")
     long create(@BindBean User user);
 
     @SqlQuery("SELECT * FROM user ORDER BY userId")
@@ -24,7 +24,7 @@ public interface UserDAO {
     @SqlQuery("SELECT * FROM user WHERE userId = :userId")
     User readById(@Bind("userId") final long userId);
 
-    @SqlUpdate("UPDATE user SET firstName = :firstName, lastName = :lastName, phone = :phone, email = :email WHERE userId = :userId")
+    @SqlUpdate("UPDATE user SET firstName = :firstName, lastName = :lastName, phone = :phone, email = :email, password = :password WHERE userId = :userId")
     void update(@BindBean User user);
 
     @SqlUpdate("DELETE FROM user WHERE userId = :userId")
