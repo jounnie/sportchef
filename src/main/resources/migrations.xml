@@ -23,6 +23,9 @@
             <column name="email" type="varchar(100)">
                 <constraints nullable="false"/>
             </column>
+            <column name="password" type="varchar(128)">
+                <constraints nullable="true"/>
+            </column>
         </createTable>
     </changeSet>
 </databaseChangeLog>

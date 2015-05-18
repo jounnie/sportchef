@@ -15,7 +15,7 @@ import java.util.List;
 public interface UserDAO {
 
     @GetGeneratedKeys
-    @SqlUpdate("INSERT INTO user (userId, firstName, lastName, phone, email) VALUES (NULL, :firstName, :lastName, :phone, :email)")
+    @SqlUpdate("INSERT INTO user (userId, firstName, lastName, phone, email, password) VALUES (NULL, :firstName, :lastName, :phone, :email, :password)")
     long create(@BindBean User user);
 
     @SqlQuery("SELECT * FROM user ORDER BY userId")
