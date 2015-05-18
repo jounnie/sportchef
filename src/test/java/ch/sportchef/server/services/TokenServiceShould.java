@@ -5,6 +5,7 @@ import ch.sportchef.server.representations.User;
 import ch.sportchef.server.utils.SportChefAuthenticator;
 import ch.sportchef.server.utils.UserGenerator;
 import com.github.toastshaman.dropwizard.auth.jwt.JsonWebTokenValidator;
+import com.github.toastshaman.dropwizard.auth.jwt.exceptions.TokenExpiredException;
 import com.github.toastshaman.dropwizard.auth.jwt.model.JsonWebToken;
 import com.github.toastshaman.dropwizard.auth.jwt.model.JsonWebTokenClaim;
 import com.github.toastshaman.dropwizard.auth.jwt.model.JsonWebTokenHeader;
@@ -121,7 +122,7 @@ public class TokenServiceShould {
         assertThat(optUser.get()).isEqualTo(user);
     }
 
-    @Test(expected = AuthenticationException.class)
+    @Test(expected = TokenExpiredException.class)
     public void rejectExpiredToken() throws ServiceNotFoundException, AuthenticationException {
         final JsonWebTokenValidator expiryValidator = new ExpiryValidator();
         final SportChefAuthenticator authenticator = new SportChefAuthenticator(expiryValidator, tokenSecret);
