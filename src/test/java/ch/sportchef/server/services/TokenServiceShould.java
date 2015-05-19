@@ -2,17 +2,15 @@ package ch.sportchef.server.services;
 
 import ch.sportchef.server.representations.Login;
 import ch.sportchef.server.representations.User;
-import ch.sportchef.server.utils.SportChefAuthenticator;
+import ch.sportchef.server.utils.TokenGenerator;
 import ch.sportchef.server.utils.UserGenerator;
+import ch.sportchef.server.utils.SportChefAuthenticator;
 import com.github.toastshaman.dropwizard.auth.jwt.JsonWebTokenValidator;
 import com.github.toastshaman.dropwizard.auth.jwt.model.JsonWebToken;
-import com.github.toastshaman.dropwizard.auth.jwt.model.JsonWebTokenClaim;
-import com.github.toastshaman.dropwizard.auth.jwt.model.JsonWebTokenHeader;
 import com.github.toastshaman.dropwizard.auth.jwt.validator.ExpiryValidator;
 import com.google.common.base.Optional;
 import io.dropwizard.auth.AuthenticationException;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,21 +42,6 @@ public class TokenServiceShould {
 
     @Before
     public void setUp() throws ServiceNotFoundException {
-        expiredToken = JsonWebToken.builder()
-                .header(JsonWebTokenHeader.HS512())
-                .claim(JsonWebTokenClaim.builder()
-                        .param("userId", 1L)
-                        .issuedAt(DateTime.now().minusDays(8))
-                        .expiration(DateTime.now().minusDays(1)).build())
-                .build();
-        validToken = JsonWebToken.builder()
-                .header(JsonWebTokenHeader.HS512())
-                .claim(JsonWebTokenClaim.builder()
-                        .param("userId", 1L)
-                        .issuedAt(DateTime.now().minusMinutes(1))
-                        .expiration(DateTime.now().plusDays(1)).build())
-                .build();
-
         final User tmpUser = UserGenerator.getJohnDoe(1L);
         final User johnDoe = new User(tmpUser.getUserId(), tmpUser.getFirstName(), tmpUser.getLastName(),
                 tmpUser.getPhone(), tmpUser.getEmail(), DigestUtils.sha512Hex(tmpUser.getPassword()));
@@ -67,6 +50,9 @@ public class TokenServiceShould {
         when(userService.readUserById(1L)).thenReturn(johnDoe);
         mockStatic(ServiceRegistry.class);
         when(ServiceRegistry.getService(eq(UserService.class))).thenReturn(userService);
+
+        expiredToken = TokenGenerator.getExpiredToken(johnDoe);
+        validToken = TokenGenerator.getValidToken(johnDoe);
     }
 
     @Test
