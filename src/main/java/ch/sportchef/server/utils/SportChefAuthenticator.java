@@ -15,11 +15,8 @@ public class SportChefAuthenticator implements Authenticator<JsonWebToken, User>
 
     private final UserService userService;
     private final JsonWebTokenValidator jsonWebTokenValidator;
-    private byte[] tokenSecret;
 
-    public SportChefAuthenticator(final JsonWebTokenValidator jsonWebTokenValidator,
-                                  final byte[] tokenSecret) throws ServiceNotFoundException {
-        this.tokenSecret = tokenSecret;
+    public SportChefAuthenticator(final JsonWebTokenValidator jsonWebTokenValidator) throws ServiceNotFoundException {
         this.jsonWebTokenValidator = jsonWebTokenValidator;
         this.userService = ServiceRegistry.getService(UserService.class);
     }
