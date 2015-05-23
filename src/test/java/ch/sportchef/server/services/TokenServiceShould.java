@@ -100,7 +100,7 @@ public class TokenServiceShould {
     public void authenticateSuccessful() throws ServiceNotFoundException, AuthenticationException {
         final User user = UserGenerator.getJohnDoe(1L);
         final JsonWebTokenValidator expiryValidator = new ExpiryValidator();
-        final SportChefAuthenticator authenticator = new SportChefAuthenticator(expiryValidator, tokenSecret);
+        final SportChefAuthenticator authenticator = new SportChefAuthenticator(expiryValidator);
         final Optional<User> optUser = authenticator.authenticate(validToken);
 
         assertThat(optUser).isNotNull();
@@ -111,7 +111,7 @@ public class TokenServiceShould {
     @Test(expected = TokenExpiredException.class)
     public void rejectExpiredToken() throws ServiceNotFoundException, AuthenticationException {
         final JsonWebTokenValidator expiryValidator = new ExpiryValidator();
-        final SportChefAuthenticator authenticator = new SportChefAuthenticator(expiryValidator, tokenSecret);
+        final SportChefAuthenticator authenticator = new SportChefAuthenticator(expiryValidator);
         final Optional<User> optUser = authenticator.authenticate(expiredToken);
     }
 }
