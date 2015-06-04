@@ -1,19 +1,18 @@
 package ch.sportchef.server;
 
-import ch.sportchef.server.bundles.SportChefMigrationsBundle;
-import ch.sportchef.server.configuration.SportChefConfiguration;
-import ch.sportchef.server.dao.UserDAO;
-import ch.sportchef.server.healthchecks.LicenseServiceHealthCheck;
-import ch.sportchef.server.healthchecks.UserServiceHealthCheck;
-import ch.sportchef.server.provider.AuthenticationExceptionMapper;
-import ch.sportchef.server.representations.User;
-import ch.sportchef.server.resources.LicenseResource;
-import ch.sportchef.server.resources.TokenResource;
-import ch.sportchef.server.resources.UserResource;
-import ch.sportchef.server.services.LicenseService;
-import ch.sportchef.server.services.ServiceRegistry;
-import ch.sportchef.server.services.TokenService;
-import ch.sportchef.server.services.UserService;
+import ch.sportchef.server.utils.SportChefMigrationsBundle;
+import ch.sportchef.server.user.UserDAO;
+import ch.sportchef.server.license.LicenseServiceHealthCheck;
+import ch.sportchef.server.user.UserServiceHealthCheck;
+import ch.sportchef.server.utils.AuthenticationExceptionMapper;
+import ch.sportchef.server.user.User;
+import ch.sportchef.server.license.LicenseResource;
+import ch.sportchef.server.token.TokenResource;
+import ch.sportchef.server.user.UserResource;
+import ch.sportchef.server.license.LicenseService;
+import ch.sportchef.server.utils.ServiceRegistry;
+import ch.sportchef.server.token.TokenService;
+import ch.sportchef.server.user.UserService;
 import ch.sportchef.server.utils.LiquibaseUtil;
 import ch.sportchef.server.utils.SportChefAuthenticator;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,13 +34,13 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 
-public class App extends Application<SportChefConfiguration> {
+public class SportChefApp extends Application<SportChefConfiguration> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SportChefApp.class);
 
     public static void main(@Nonnull final String[] args) throws Exception {
         LOGGER.info("Starting application with arguments: %s", new Object[]{args});
-        new App().run(args);
+        new SportChefApp().run(args);
     }
 
     @Override
