@@ -1,4 +1,4 @@
-package ch.sportchef.server.configuration;
+package ch.sportchef.server;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
@@ -20,7 +20,7 @@ public class SportChefConfiguration extends Configuration {
     @Valid
     @NotNull
     @JsonProperty("healthCheck")
-    private HealthCheckConfiguration healthCheck = new HealthCheckConfiguration();
+    private SportChefHealthCheckConfiguration healthCheck = new SportChefHealthCheckConfiguration();
 
     @Valid
     @NotEmpty
@@ -31,7 +31,7 @@ public class SportChefConfiguration extends Configuration {
         return database;
     }
 
-    public HealthCheckConfiguration getHealthCheckConfiguration() {
+    public SportChefHealthCheckConfiguration getHealthCheckConfiguration() {
         return healthCheck;
     }
 

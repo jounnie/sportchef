@@ -1,11 +1,12 @@
-package ch.sportchef.server.configuration;
+package ch.sportchef.server;
 
+import ch.sportchef.server.user.UserServiceConfiguration;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-public class HealthCheckConfiguration {
+public class SportChefHealthCheckConfiguration {
 
     @Valid
     @NotNull
