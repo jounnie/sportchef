@@ -1,4 +1,4 @@
-package ch.sportchef.server.provider;
+package ch.sportchef.server.utils;
 
 import io.dropwizard.auth.AuthenticationException;
 
