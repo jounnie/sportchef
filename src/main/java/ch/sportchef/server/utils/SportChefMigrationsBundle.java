@@ -1,6 +1,6 @@
-package ch.sportchef.server.bundles;
+package ch.sportchef.server.utils;
 
-import ch.sportchef.server.configuration.SportChefConfiguration;
+import ch.sportchef.server.SportChefConfiguration;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.migrations.MigrationsBundle;
 

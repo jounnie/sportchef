@@ -1,8 +1,8 @@
-package ch.sportchef.server;
+package ch.sportchef.server.utils;
 
-import ch.sportchef.server.bundles.SportChefMigrationsBundle;
-import ch.sportchef.server.configuration.SportChefConfiguration;
-import ch.sportchef.server.configuration.SportChefDataSourceFactory;
+import ch.sportchef.server.SportChefConfiguration;
+import ch.sportchef.server.SportChefDataSourceFactory;
+import ch.sportchef.server.utils.SportChefMigrationsBundle;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
