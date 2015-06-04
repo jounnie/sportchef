@@ -1,4 +1,4 @@
-package ch.sportchef.server.configuration;
+package ch.sportchef.server;
 
 import io.dropwizard.db.DataSourceFactory;
 
