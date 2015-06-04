@@ -1,6 +1,6 @@
-package ch.sportchef.server.services;
+package ch.sportchef.server.license;
 
-import ch.sportchef.server.representations.License;
+import ch.sportchef.server.utils.Service;
 import com.google.common.base.Charsets;
 
 import javax.ws.rs.NotFoundException;

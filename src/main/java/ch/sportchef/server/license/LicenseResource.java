@@ -1,8 +1,6 @@
-package ch.sportchef.server.resources;
+package ch.sportchef.server.license;
 
-import ch.sportchef.server.representations.License;
-import ch.sportchef.server.services.LicenseService;
-import ch.sportchef.server.services.ServiceRegistry;
+import ch.sportchef.server.utils.ServiceRegistry;
 import com.codahale.metrics.annotation.Timed;
 
 import javax.management.ServiceNotFoundException;

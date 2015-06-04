@@ -1,5 +1,6 @@
-package ch.sportchef.server.representations;
+package ch.sportchef.server.license;
 
+import ch.sportchef.server.license.License;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.dropwizard.jackson.Jackson;
 import org.junit.Test;

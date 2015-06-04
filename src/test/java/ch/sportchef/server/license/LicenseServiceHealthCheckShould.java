@@ -1,7 +1,7 @@
-package ch.sportchef.server.healthcheck;
+package ch.sportchef.server.license;
 
-import ch.sportchef.server.App;
-import ch.sportchef.server.configuration.SportChefConfiguration;
+import ch.sportchef.server.SportChefApp;
+import ch.sportchef.server.SportChefConfiguration;
 import io.dropwizard.testing.junit.DropwizardAppRule;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class LicenseServiceHealthCheckShould {
 
     @ClassRule
-    public static final DropwizardAppRule<SportChefConfiguration> RULE = new DropwizardAppRule<>(App.class, "config-test.yaml");
+    public static final DropwizardAppRule<SportChefConfiguration> RULE = new DropwizardAppRule<>(SportChefApp.class, "config-test.yaml");
 
     @Test
     public void returnHealthy() throws IOException {
