@@ -1,14 +1,11 @@
 package ch.sportchef.server;
 
-import ch.sportchef.server.configuration.HealthCheckConfiguration;
-import ch.sportchef.server.configuration.SportChefConfiguration;
-import ch.sportchef.server.configuration.SportChefDataSourceFactory;
-import ch.sportchef.server.configuration.UserServiceConfiguration;
-import ch.sportchef.server.dao.UserDAO;
-import ch.sportchef.server.services.LicenseService;
-import ch.sportchef.server.services.ServiceRegistry;
-import ch.sportchef.server.services.UserService;
-import ch.sportchef.server.utils.UserGenerator;
+import ch.sportchef.server.user.UserServiceConfiguration;
+import ch.sportchef.server.user.UserDAO;
+import ch.sportchef.server.license.LicenseService;
+import ch.sportchef.server.utils.ServiceRegistry;
+import ch.sportchef.server.user.UserService;
+import ch.sportchef.server.user.UserGenerator;
 import com.codahale.metrics.health.HealthCheck;
 import com.codahale.metrics.health.HealthCheckRegistry;
 import com.github.toastshaman.dropwizard.auth.jwt.hmac.HmacSHA512Verifier;
@@ -35,14 +32,14 @@ import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({App.class, ServiceRegistry.class})
-public class AppShould {
+@PrepareForTest({SportChefApp.class, ServiceRegistry.class})
+public class SportChefAppShould {
 
     @Test
     public void startWithArguments() throws Exception {
-        final App appMock = mock(App.class);
-        whenNew(App.class).withNoArguments().thenReturn(appMock);
-        App.main(new String[]{"server", "config-test.yaml"});
+        final SportChefApp appMock = mock(SportChefApp.class);
+        whenNew(SportChefApp.class).withNoArguments().thenReturn(appMock);
+        SportChefApp.main(new String[]{"server", "config-test.yaml"});
         verify(appMock, times(1)).run(anyVararg());
     }
 
@@ -50,7 +47,7 @@ public class AppShould {
     public void initializeProperly() {
         final Bootstrap<SportChefConfiguration> bootstrap = mock(Bootstrap.class);
 
-        new App().initialize(bootstrap);
+        new SportChefApp().initialize(bootstrap);
 
         verify(bootstrap, times(2)).addBundle(any(Bundle.class));
     }
@@ -74,7 +71,7 @@ public class AppShould {
         final UserServiceConfiguration userServiceConfiguration = mock(UserServiceConfiguration.class);
         when(userServiceConfiguration.getReferenceUser()).thenReturn(UserGenerator.getJohnDoe(1L));
 
-        final HealthCheckConfiguration healthCheckConfiguration = mock(HealthCheckConfiguration.class);
+        final SportChefHealthCheckConfiguration healthCheckConfiguration = mock(SportChefHealthCheckConfiguration.class);
         when (healthCheckConfiguration.getUserServiceConfiguration()).thenReturn(userServiceConfiguration);
 
         final SportChefConfiguration configuration = mock(SportChefConfiguration.class);
@@ -95,7 +92,7 @@ public class AppShould {
         when(ServiceRegistry.getService(eq(UserService.class))).thenReturn(userService);
         */
 
-        new App().run(configuration, environment);
+        new SportChefApp().run(configuration, environment);
 
         assertThat(ServiceRegistry.getService(LicenseService.class)).isNotNull();
         assertThat(ServiceRegistry.getService(UserService.class)).isNotNull();
