@@ -1,6 +1,6 @@
-package ch.sportchef.server.configuration;
+package ch.sportchef.server.user;
 
-import ch.sportchef.server.representations.User;
+import ch.sportchef.server.user.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.Valid;

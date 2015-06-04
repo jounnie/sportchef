@@ -1,11 +1,8 @@
-package ch.sportchef.server.healthcheck;
+package ch.sportchef.server.user;
 
-import ch.sportchef.server.App;
-import ch.sportchef.server.configuration.SportChefConfiguration;
-import ch.sportchef.server.representations.User;
-import ch.sportchef.server.services.ServiceRegistry;
-import ch.sportchef.server.services.UserService;
-import ch.sportchef.server.utils.UserGenerator;
+import ch.sportchef.server.SportChefApp;
+import ch.sportchef.server.SportChefConfiguration;
+import ch.sportchef.server.utils.ServiceRegistry;
 import io.dropwizard.testing.junit.DropwizardAppRule;
 import liquibase.exception.LiquibaseException;
 import org.junit.Before;
@@ -28,7 +25,7 @@ public class UserServiceHealthCheckShould {
     private UserService userService;
 
     @ClassRule
-    public static final DropwizardAppRule<SportChefConfiguration> RULE = new DropwizardAppRule<>(App.class, "config-test.yaml");
+    public static final DropwizardAppRule<SportChefConfiguration> RULE = new DropwizardAppRule<>(SportChefApp.class, "config-test.yaml");
 
     @Before
     public void setup() throws SQLException, LiquibaseException, ServiceNotFoundException {

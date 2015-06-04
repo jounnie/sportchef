@@ -1,6 +1,5 @@
-package ch.sportchef.server.dao.mapper;
+package ch.sportchef.server.user;
 
-import ch.sportchef.server.representations.User;
 import org.skife.jdbi.v2.StatementContext;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
 

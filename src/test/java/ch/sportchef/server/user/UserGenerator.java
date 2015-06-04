@@ -1,6 +1,4 @@
-package ch.sportchef.server.utils;
-
-import ch.sportchef.server.representations.User;
+package ch.sportchef.server.user;
 
 public class UserGenerator {
 

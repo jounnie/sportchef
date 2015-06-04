@@ -1,7 +1,6 @@
-package ch.sportchef.server.services;
+package ch.sportchef.server.user;
 
-import ch.sportchef.server.dao.UserDAO;
-import ch.sportchef.server.representations.User;
+import ch.sportchef.server.utils.Service;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 

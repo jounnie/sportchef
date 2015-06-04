@@ -1,8 +1,5 @@
-package ch.sportchef.server.services;
+package ch.sportchef.server.user;
 
-import ch.sportchef.server.dao.UserDAO;
-import ch.sportchef.server.representations.User;
-import ch.sportchef.server.utils.UserGenerator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,9 +1,7 @@
-package ch.sportchef.server.healthchecks;
+package ch.sportchef.server.user;
 
-import ch.sportchef.server.configuration.SportChefConfiguration;
-import ch.sportchef.server.representations.User;
-import ch.sportchef.server.services.ServiceRegistry;
-import ch.sportchef.server.services.UserService;
+import ch.sportchef.server.SportChefConfiguration;
+import ch.sportchef.server.utils.ServiceRegistry;
 import com.codahale.metrics.health.HealthCheck;
 
 import javax.management.ServiceNotFoundException;

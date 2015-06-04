@@ -1,5 +1,6 @@
-package ch.sportchef.server.representations;
+package ch.sportchef.server.user;
 
+import ch.sportchef.server.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.dropwizard.jackson.Jackson;
 import org.junit.Test;
@@ -34,7 +35,7 @@ public class UserShould {
     public void haveUsefulToStringImplementation() {
         final User user = new User(1L, "John", "Doe", "+41 79 123 45 67", "john.doe@sportchef.ch", "secret");
         final String toString = user.toString();
-        assertThat(toString).contains("ch.sportchef.server.representations.User");
+        assertThat(toString).contains("ch.sportchef.server.user.User");
         assertThat(toString).contains("userId=1");
         assertThat(toString).contains("firstName=John");
         assertThat(toString).contains("lastName=Doe");

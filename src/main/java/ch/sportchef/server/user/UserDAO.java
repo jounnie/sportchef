@@ -1,7 +1,5 @@
-package ch.sportchef.server.dao;
+package ch.sportchef.server.user;
 
-import ch.sportchef.server.dao.mapper.UserMapper;
-import ch.sportchef.server.representations.User;
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.BindBean;
 import org.skife.jdbi.v2.sqlobject.GetGeneratedKeys;

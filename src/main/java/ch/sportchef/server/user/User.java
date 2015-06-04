@@ -1,4 +1,4 @@
-package ch.sportchef.server.representations;
+package ch.sportchef.server.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.builder.EqualsBuilder;

@@ -1,11 +1,8 @@
-package ch.sportchef.server.resources;
+package ch.sportchef.server.user;
 
-import ch.sportchef.server.App;
-import ch.sportchef.server.configuration.SportChefConfiguration;
-import ch.sportchef.server.representations.User;
-import ch.sportchef.server.services.ServiceRegistry;
-import ch.sportchef.server.services.UserService;
-import ch.sportchef.server.utils.UserGenerator;
+import ch.sportchef.server.SportChefApp;
+import ch.sportchef.server.SportChefConfiguration;
+import ch.sportchef.server.utils.ServiceRegistry;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.dropwizard.testing.junit.DropwizardAppRule;
 import liquibase.exception.LiquibaseException;
@@ -29,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UserResourceShould {
 
     @ClassRule
-    public static final DropwizardAppRule<SportChefConfiguration> RULE = new DropwizardAppRule<>(App.class, "config-test.yaml");
+    public static final DropwizardAppRule<SportChefConfiguration> RULE = new DropwizardAppRule<>(SportChefApp.class, "config-test.yaml");
 
     @BeforeClass
     public static void setup() throws SQLException, LiquibaseException, ServiceNotFoundException {
