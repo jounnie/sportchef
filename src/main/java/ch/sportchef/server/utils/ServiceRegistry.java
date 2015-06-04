@@ -1,4 +1,4 @@
-package ch.sportchef.server.services;
+package ch.sportchef.server.utils;
 
 import javax.management.ServiceNotFoundException;
 import java.util.HashMap;

@@ -1,5 +1,7 @@
-package ch.sportchef.server.services;
+package ch.sportchef.server.utils;
 
+import ch.sportchef.server.utils.Service;
+import ch.sportchef.server.utils.ServiceRegistry;
 import ch.sportchef.server.utils.UtilityClassVerifier;
 import org.junit.Assert;
 import org.junit.Test;
