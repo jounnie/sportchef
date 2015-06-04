@@ -1,12 +1,11 @@
-package ch.sportchef.server.resources;
+package ch.sportchef.server.token;
 
-import ch.sportchef.server.App;
-import ch.sportchef.server.configuration.SportChefConfiguration;
-import ch.sportchef.server.representations.Login;
-import ch.sportchef.server.representations.User;
-import ch.sportchef.server.services.ServiceRegistry;
-import ch.sportchef.server.services.UserService;
-import ch.sportchef.server.utils.UserGenerator;
+import ch.sportchef.server.SportChefApp;
+import ch.sportchef.server.SportChefConfiguration;
+import ch.sportchef.server.user.User;
+import ch.sportchef.server.user.UserService;
+import ch.sportchef.server.utils.ServiceRegistry;
+import ch.sportchef.server.user.UserGenerator;
 import com.github.toastshaman.dropwizard.auth.jwt.hmac.HmacSHA512Signer;
 import com.github.toastshaman.dropwizard.auth.jwt.model.JsonWebToken;
 import com.github.toastshaman.dropwizard.auth.jwt.model.JsonWebTokenClaim;
@@ -34,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TokenResourceShould {
 
     @ClassRule
-    public static final DropwizardAppRule<SportChefConfiguration> RULE = new DropwizardAppRule<>(App.class, "config-test.yaml");
+    public static final DropwizardAppRule<SportChefConfiguration> RULE = new DropwizardAppRule<>(SportChefApp.class, "config-test.yaml");
 
     public static final String SIGNED_TOKEN_PREFIX = "bearer ";
 

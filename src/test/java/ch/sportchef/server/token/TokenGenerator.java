@@ -1,6 +1,6 @@
-package ch.sportchef.server.utils;
+package ch.sportchef.server.token;
 
-import ch.sportchef.server.representations.User;
+import ch.sportchef.server.user.User;
 import com.github.toastshaman.dropwizard.auth.jwt.model.JsonWebToken;
 import com.github.toastshaman.dropwizard.auth.jwt.model.JsonWebTokenClaim;
 import com.github.toastshaman.dropwizard.auth.jwt.model.JsonWebTokenHeader;
@@ -8,7 +8,7 @@ import org.joda.time.DateTime;
 
 import javax.annotation.Nonnull;
 
-public class TokenGenerator {
+class TokenGenerator {
 
     public static JsonWebToken getValidToken(@Nonnull final User user) {
         return JsonWebToken.builder()

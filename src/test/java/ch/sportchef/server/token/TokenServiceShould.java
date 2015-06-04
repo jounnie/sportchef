@@ -1,9 +1,9 @@
-package ch.sportchef.server.services;
+package ch.sportchef.server.token;
 
-import ch.sportchef.server.representations.Login;
-import ch.sportchef.server.representations.User;
-import ch.sportchef.server.utils.TokenGenerator;
-import ch.sportchef.server.utils.UserGenerator;
+import ch.sportchef.server.user.User;
+import ch.sportchef.server.user.UserService;
+import ch.sportchef.server.utils.ServiceRegistry;
+import ch.sportchef.server.user.UserGenerator;
 import ch.sportchef.server.utils.SportChefAuthenticator;
 import com.github.toastshaman.dropwizard.auth.jwt.JsonWebTokenValidator;
 import com.github.toastshaman.dropwizard.auth.jwt.exceptions.TokenExpiredException;

@@ -1,4 +1,4 @@
-package ch.sportchef.server.representations;
+package ch.sportchef.server.token;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;

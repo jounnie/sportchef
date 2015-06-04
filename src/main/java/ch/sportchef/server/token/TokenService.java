@@ -1,7 +1,9 @@
-package ch.sportchef.server.services;
+package ch.sportchef.server.token;
 
-import ch.sportchef.server.representations.Login;
-import ch.sportchef.server.representations.User;
+import ch.sportchef.server.user.User;
+import ch.sportchef.server.utils.Service;
+import ch.sportchef.server.utils.ServiceRegistry;
+import ch.sportchef.server.user.UserService;
 import com.github.toastshaman.dropwizard.auth.jwt.hmac.HmacSHA512Signer;
 import com.github.toastshaman.dropwizard.auth.jwt.model.JsonWebToken;
 import com.github.toastshaman.dropwizard.auth.jwt.model.JsonWebTokenClaim;

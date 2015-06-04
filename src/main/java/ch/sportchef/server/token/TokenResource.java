@@ -1,9 +1,7 @@
-package ch.sportchef.server.resources;
+package ch.sportchef.server.token;
 
-import ch.sportchef.server.representations.Login;
-import ch.sportchef.server.representations.User;
-import ch.sportchef.server.services.ServiceRegistry;
-import ch.sportchef.server.services.TokenService;
+import ch.sportchef.server.user.User;
+import ch.sportchef.server.utils.ServiceRegistry;
 import io.dropwizard.auth.Auth;
 import io.dropwizard.auth.AuthenticationException;
 
