@@ -16,7 +16,6 @@ import ch.sportchef.server.user.UserService;
 import ch.sportchef.server.utils.LiquibaseUtil;
 import ch.sportchef.server.utils.SportChefAuthenticator;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import com.github.toastshaman.dropwizard.auth.jwt.JWTAuthFactory;
 import com.github.toastshaman.dropwizard.auth.jwt.JsonWebTokenParser;
 import com.github.toastshaman.dropwizard.auth.jwt.hmac.HmacSHA512Verifier;
@@ -52,8 +51,8 @@ public class SportChefApp extends Application<SportChefConfiguration> {
         bootstrap.addBundle(new SportChefMigrationsBundle());
 
         // Register additional Jackson modules
-        final ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JSR310Module());
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.findAndRegisterModules();
     }
 
     @Override
