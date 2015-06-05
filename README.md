@@ -1,7 +1,7 @@
-*SportChef*
+*SportChef Server*
 ======
 
-[![Build Status](https://travis-ci.org/McPringle/sportchef.svg?branch=master)](https://travis-ci.org/McPringle/sportchef) [![Coverage Status](https://coveralls.io/repos/McPringle/sportchef/badge.svg?branch=master)](https://coveralls.io/r/McPringle/sportchef?branch=master) [![Coverity Scan Build Status](https://scan.coverity.com/projects/4632/badge.svg)](https://scan.coverity.com/projects/4632) [![Dependency Status](https://www.versioneye.com/user/projects/5517e829eaf3fa261e000003/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5517e829eaf3fa261e000003) [![Issue Stats](http://issuestats.com/github/McPringle/sportchef/badge/issue)](http://issuestats.com/github/McPringle/sportchef) [![Issue Stats](http://issuestats.com/github/McPringle/sportchef/badge/pr)](http://issuestats.com/github/McPringle/sportchef)
+[![Build Status](https://travis-ci.org/McPringle/sportchef-server.svg?branch=master)](https://travis-ci.org/McPringle/sportchef-server) [![Coverage Status](https://coveralls.io/repos/McPringle/sportchef-server/badge.svg)](https://coveralls.io/r/McPringle/sportchef-server) [![Coverity Scan Build Status](https://scan.coverity.com/projects/5351/badge.svg)](https://scan.coverity.com/projects/5351) [![Dependency Status](https://www.versioneye.com/user/projects/55715899626264001e000000/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55715899626264001e000000) [![Issue Stats](http://issuestats.com/github/McPringle/sportchef-server/badge/issue)](http://issuestats.com/github/McPringle/sportchef-server) [![Issue Stats](http://issuestats.com/github/McPringle/sportchef-server/badge/pr)](http://issuestats.com/github/McPringle/sportchef-server)
 
 **Sports Competition Management Software with a modern and fast architecture. Java based backend with a RESTful JSON API and a HTML 5 client.**
 
@@ -29,17 +29,17 @@ We'll use [GitHub Pages](https://pages.github.com/) for hosting our upcoming pro
 
 ## Tools
 
-We use a [Gradle](http://gradle.org/) build to tie everything together. As a result this project is IDE independent (every state-of-the-art IDE should be able to import and/or use a Gradle project). Every push to our [main repository](https://github.com/McPringle/sportchef) will be built automatically by [Travis-CI](https://travis-ci.org/McPringle/sportchef) and checked by [Coveralls](https://coveralls.io/r/McPringle/sportchef?branch=master). From time to time we'll check the code with [Coverity](https://scan.coverity.com/projects/4632), too. [VersionEye](https://www.versioneye.com/user/projects/5517e829eaf3fa261e000003) is used to track out of date dependencies. To track our reaction time on issues and pull requests we use [Issue Stats](http://issuestats.com/github/McPringle/sportchef).
+We use a [Gradle](http://gradle.org/) build to tie everything together. As a result this project is IDE independent (every state-of-the-art IDE should be able to import and/or use a Gradle project). Every push to our [main repository](https://github.com/McPringle/sportchef-server) will be built automatically by [Travis-CI](https://travis-ci.org/McPringle/sportchef-server) and checked by [Coveralls](https://coveralls.io/r/McPringle/sportchef-server?branch=master). From time to time we'll check the code with [Coverity](https://scan.coverity.com/projects/5351), too. [VersionEye](https://www.versioneye.com/user/projects/55715899626264001e000000) is used to track out of date dependencies. To track our reaction time on issues and pull requests we use [Issue Stats](http://issuestats.com/github/McPringle/sportchef-server).
 
 # Installation
 
 ## Database Migration
 
-To migrate your database you simply have to call *SportChef* with the database migration parameters:
+To migrate your database you simply have to call *SportChef Server* with the database migration parameters:
 
-```java -jar sportchef-version.jar db migrate config.yaml```
+```java -jar sportchef-server-version.jar db migrate config.yaml```
 
-# How to contribute to *SportChef*
+# How to contribute to *SportChef Server*
 
 ## Source code management
 
@@ -57,7 +57,7 @@ To migrate your database you simply have to call *SportChef* with the database m
 
 ### Example of the GIT Workflow
 
-1. If not already done, fork the *SportChef* repository using GitHub and clone your fork locally:<br/>`git clone https://github.com/[YourUsername]/sportchef`
+1. If not already done, fork the *SportChef Server* repository using GitHub and clone your fork locally:<br/>`git clone https://github.com/[YourUsername]/sportchef-server`
 2. Create the feature branch:<br/>`git checkout -b enhancement/42-update-dropwizard`
 3. Make your changes and commits:<br/>`git add build.gradle`<br/>`git commit -m ‘#42 Updated DropWizard to 0.7.1’`
 4. Keep the feature branch up-to-date:<br/>`git rebase master`
@@ -71,7 +71,7 @@ To migrate your database you simply have to call *SportChef* with the database m
 
 If you fork this repository, GitHub will not keep your fork in sync with this repository. You have to do it on your own.
 
-1. If not already done, add this repository as an upstream to your repository:<br/>`git remote add upstream https://github.com/McPringle/sportchef.git`
+1. If not already done, add this repository as an upstream to your repository:<br/>`git remote add upstream https://github.com/McPringle/sportchef-server.git`
 2. Verify that this repository was added successfully:<br/>`git remote -v`
 3. Fetch branches and commits from this repository to your local branch `upstream/master`:<br/>`git fetch upstream`
 4. If you are not on your local master branch, check it out:<br/>`git checkout master`
