@@ -25,13 +25,13 @@ public final class UtilityClassVerifier {
             throws NoSuchMethodException, InvocationTargetException,
             InstantiationException, IllegalAccessException {
 
-        checkConstructorIsFinal(clazz);
+        checkClassIsFinal(clazz);
         checkConstructorCount(clazz);
         checkConstructorAccessibility(clazz);
         checkForNonStaticMethods(clazz);
     }
 
-    private static void checkConstructorIsFinal(Class<?> clazz) {
+    private static void checkClassIsFinal(Class<?> clazz) {
         assertTrue("class must be final", Modifier.isFinal(clazz.getModifiers()));
     }
 
