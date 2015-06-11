@@ -12,6 +12,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public final class LiquibaseUtil {
+
+    private LiquibaseUtil () {
+        super();
+    }
+
     public static void migrate(final SportChefConfiguration configuration, final Environment environment) throws LiquibaseException, SQLException {
         final ManagedDataSource ds = configuration.getDataSourceFactory().build(environment.metrics(), "migrations");
         final Connection connection = ds.getConnection();
