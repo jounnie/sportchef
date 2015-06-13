@@ -64,7 +64,7 @@ public class SportChefApp extends Application<SportChefConfiguration> {
 
         // Migrate database if configured
         if (configuration.getDataSourceFactory().isMigrateOnStart()) {
-            new LiquibaseUtil().migrate(configuration, environment);
+            LiquibaseUtil.migrate(configuration, environment);
         }
 
         // Prepare JWT secret token

@@ -42,11 +42,16 @@ dependencies {
     )
     testCompile (
             'io.dropwizard:dropwizard-testing:0.8.1',
+            'org.jmockit:jmockit:1.18',
             'junit:junit:4.12',
             'org.powermock:powermock-core:1.6.2',
             'org.powermock:powermock-api-mockito:1.6.2',
             'org.powermock:powermock-module-junit4:1.6.2'
     )
+}
+
+test {
+    forkEvery = 1
 }
 
 buildscript {
