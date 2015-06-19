@@ -1,9 +1,9 @@
 package ch.sportchef.server.token;
 
 import ch.sportchef.server.user.User;
+import ch.sportchef.server.user.UserGenerator;
 import ch.sportchef.server.user.UserService;
 import ch.sportchef.server.utils.ServiceRegistry;
-import ch.sportchef.server.user.UserGenerator;
 import ch.sportchef.server.utils.SportChefAuthenticator;
 import com.github.toastshaman.dropwizard.auth.jwt.JsonWebTokenValidator;
 import com.github.toastshaman.dropwizard.auth.jwt.exceptions.TokenExpiredException;
@@ -11,13 +11,11 @@ import com.github.toastshaman.dropwizard.auth.jwt.model.JsonWebToken;
 import com.github.toastshaman.dropwizard.auth.jwt.validator.ExpiryValidator;
 import com.google.common.base.Optional;
 import io.dropwizard.auth.AuthenticationException;
+import mockit.Expectations;
+import mockit.Mocked;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import javax.management.ServiceNotFoundException;
 import java.nio.charset.StandardCharsets;
@@ -25,15 +23,17 @@ import java.util.Map;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(ServiceRegistry.class)
-@PowerMockIgnore({"javax.crypto.*" })
 public class TokenServiceShould {
+
+    @Mocked
+    private UserService userService;
+
+    @Mocked
+    private ServiceRegistry serviceRegistry;
+
+    private User johnDoe;
 
     private final byte[] tokenSecret =
             UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8);
@@ -44,13 +44,12 @@ public class TokenServiceShould {
     @Before
     public void setUp() throws ServiceNotFoundException {
         final User tmpUser = UserGenerator.getJohnDoe(1L);
-        final User johnDoe = new User(tmpUser.getUserId(), tmpUser.getFirstName(), tmpUser.getLastName(),
+        johnDoe = new User(tmpUser.getUserId(), tmpUser.getFirstName(), tmpUser.getLastName(),
                 tmpUser.getPhone(), tmpUser.getEmail(), DigestUtils.sha512Hex(tmpUser.getPassword()));
 
-        final UserService userService = mock(UserService.class);
-        when(userService.readUserById(1L)).thenReturn(johnDoe);
-        mockStatic(ServiceRegistry.class);
-        when(ServiceRegistry.getService(eq(UserService.class))).thenReturn(userService);
+        new Expectations() {{
+            ServiceRegistry.getService(UserService.class); result = userService;
+        }};
 
         expiredToken = TokenGenerator.getExpiredToken(johnDoe);
         validToken = TokenGenerator.getValidToken(johnDoe);
@@ -58,6 +57,10 @@ public class TokenServiceShould {
 
     @Test
     public void generateNewToken() throws ServiceNotFoundException, AuthenticationException {
+        new Expectations() {{
+            userService.readUserById(1L); result = johnDoe;
+        }};
+
         final User user = UserGenerator.getJohnDoe(1L);
         final Login login = new Login(user.getUserId(), user.getPassword());
         final JsonWebTokenValidator jsonWebTokenValidator = mock(JsonWebTokenValidator.class);
@@ -98,6 +101,10 @@ public class TokenServiceShould {
 
     @Test
     public void authenticateSuccessful() throws ServiceNotFoundException, AuthenticationException {
+        new Expectations() {{
+            userService.readUserById(1L); result = johnDoe;
+        }};
+
         final User user = UserGenerator.getJohnDoe(1L);
         final JsonWebTokenValidator expiryValidator = new ExpiryValidator();
         final SportChefAuthenticator authenticator = new SportChefAuthenticator(expiryValidator);
