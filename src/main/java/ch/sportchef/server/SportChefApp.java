@@ -1,5 +1,9 @@
 package ch.sportchef.server;
 
+import ch.sportchef.server.event.EventDAO;
+import ch.sportchef.server.event.EventResource;
+import ch.sportchef.server.event.EventService;
+import ch.sportchef.server.event.EventServiceHealthCheck;
 import ch.sportchef.server.utils.SportChefMigrationsBundle;
 import ch.sportchef.server.user.UserDAO;
 import ch.sportchef.server.license.LicenseServiceHealthCheck;
@@ -61,6 +65,7 @@ public class SportChefApp extends Application<SportChefConfiguration> {
         // Setup database configuration
         final DBIFactory factory = new DBIFactory();
         final DBI dbi = factory.build(environment, configuration.getDataSourceFactory(), "default");
+        dbi.registerArgumentFactory(new DateTimeArgumentFactory());
 
         // Migrate database if configured
         if (configuration.getDataSourceFactory().isMigrateOnStart()) {
@@ -72,20 +77,24 @@ public class SportChefApp extends Application<SportChefConfiguration> {
 
         // Prepare data access objects
         final UserDAO userDAO = dbi.onDemand(UserDAO.class);
+        final EventDAO eventDAO = dbi.onDemand(EventDAO.class);
 
         // Register services
         ServiceRegistry.register(new LicenseService());
         ServiceRegistry.register(new UserService(userDAO));
         ServiceRegistry.register(new TokenService(tokenSecret));
+        ServiceRegistry.register(new EventService(eventDAO));
 
         // Initialize health checks
         environment.healthChecks().register("licenseService", new LicenseServiceHealthCheck());
+        environment.healthChecks().register("eventService", new EventServiceHealthCheck(configuration));
         environment.healthChecks().register("userService", new UserServiceHealthCheck(configuration));
 
         // Initialize resources
         environment.jersey().register(new LicenseResource());
         environment.jersey().register(new TokenResource());
         environment.jersey().register(new UserResource());
+        environment.jersey().register(new EventResource());
 
         // Register custom exception mappers
         environment.jersey().register(new AuthenticationExceptionMapper());
