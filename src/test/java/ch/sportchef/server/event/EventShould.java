@@ -16,7 +16,7 @@ public class EventShould {
 
     @Test
     public void serializeToJSON() throws IOException {
-        final Event event = new Event(1L, "WM", "Japan", LocalDate.now());
+        final Event event = new Event(1L, "WM", "Japan", LocalDate.of(2015, 6, 4));
         assertThat(MAPPER.writeValueAsString(event)).isEqualTo(fixture("fixtures/event.json"));
     }
 
@@ -32,10 +32,10 @@ public class EventShould {
 
     @Test
     public void haveUsefulToStringImplementation() {
-        final Event event = new Event(1L, "WM", "Japan", LocalDate.now());
+        final Event event = new Event(1L, "WM", "Japan", LocalDate.of(2015, 6, 4));
         final String toString = event.toString();
         assertThat(toString).contains("ch.sportchef.server.event.Event");
-        assertThat(toString).contains("id=1");
+        assertThat(toString).contains("eventId=1");
         assertThat(toString).contains("title=WM");
         assertThat(toString).contains("location=Japan");
         assertThat(toString).contains("date=2015-06-04");
